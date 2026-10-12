@@ -1,0 +1,16 @@
+# Hệ thống và tạm thời
+*.tmp
+*.log
+*.bak
+Thumbs.db
+desktop.ini
+
+# IDE & Editor
+.vscode/
+.idea/
+*.suo
+*.user
+
+# File sao lưu DB kích thước lớn (nếu có)
+*.dump
+*.tar.gz
