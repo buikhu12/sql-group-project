@@ -1,0 +1,36 @@
+
+-- ============================================
+-- BTL CO SO DU LIEU
+-- HE THONG QUAN LY BENH VIEN
+-- BANG 07: KHAM_BENH
+-- ============================================
+
+USE QuanLyBenhVien;
+
+CREATE TABLE KHAM_BENH (
+    MaKham VARCHAR(10) NOT NULL,
+    MaBS VARCHAR(10) NOT NULL,
+    MaBN VARCHAR(10) NOT NULL,
+    MaPhong VARCHAR(10) NOT NULL,
+    NgayKham DATETIME NOT NULL,
+    ChanDoan VARCHAR(255),
+    TienKham DECIMAL(10,2),
+
+    CONSTRAINT PK_KHAM_BENH
+       PRIMARY KEY (MaKham),
+
+    CONSTRAINT FK_KHAM_BENH_BAC_SI
+        FOREIGN KEY (MaBS)
+        REFERENCES BAC_SI(MaNS),
+
+    CONSTRAINT FK_KHAM_BENH_BENH_NHAN
+        FOREIGN KEY (MaBN)
+        REFERENCES BENH_NHAN(MaBN),
+
+    CONSTRAINT FK_KHAM_BENH_PHONG_KHAM
+        FOREIGN KEY (MaPhong)
+        REFERENCES PHONG_KHAM(MaPhong),
+
+    CONSTRAINT CK_KHAM_BENH_TIEN
+        CHECK (TienKham > 0)
+);
