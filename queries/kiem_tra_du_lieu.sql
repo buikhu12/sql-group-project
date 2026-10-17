@@ -1,3 +1,10 @@
+﻿-- ============================================
+-- BTL CO SO DU LIEU - HE THONG QUAN LY BENH VIEN
+-- PHIEN BAN MICROSOFT SQL SERVER (T-SQL)
+-- ============================================
+
+USE [QuanLyBenhVien];
+GO
 
 -- ============================================
 -- BTL CO SO DU LIEU
@@ -5,30 +12,28 @@
 -- KIEM TRA DU LIEU MAU
 -- ============================================
 
-USE QuanLyBenhVien;
-
 -- 01. Kiem tra so ban ghi cua 10 bang
 
-SELECT 'KHOA' AS TenBang, COUNT(*) AS SoBanGhi FROM KHOA
+SELECT N'KHOA' AS TenBang, COUNT(*) AS SoBanGhi FROM dbo.KHOA
 UNION ALL
-SELECT 'NHAN_SU', COUNT(*) FROM NHAN_SU
+SELECT N'NHAN_SU', COUNT(*) FROM dbo.NHAN_SU
 UNION ALL
-SELECT 'BAC_SI', COUNT(*) FROM BAC_SI
+SELECT N'BAC_SI', COUNT(*) FROM dbo.BAC_SI
 UNION ALL
-SELECT 'Y_TA', COUNT(*) FROM Y_TA
+SELECT N'Y_TA', COUNT(*) FROM dbo.Y_TA
 UNION ALL
-SELECT 'PHONG_KHAM', COUNT(*) FROM PHONG_KHAM
+SELECT N'PHONG_KHAM', COUNT(*) FROM dbo.PHONG_KHAM
 UNION ALL
-SELECT 'BENH_NHAN', COUNT(*) FROM BENH_NHAN
+SELECT N'BENH_NHAN', COUNT(*) FROM dbo.BENH_NHAN
 UNION ALL
-SELECT 'KHAM_BENH', COUNT(*) FROM KHAM_BENH
+SELECT N'KHAM_BENH', COUNT(*) FROM dbo.KHAM_BENH
 UNION ALL
-SELECT 'DON_THUOC', COUNT(*) FROM DON_THUOC
+SELECT N'DON_THUOC', COUNT(*) FROM dbo.DON_THUOC
 UNION ALL
-SELECT 'THUOC', COUNT(*) FROM THUOC
+SELECT N'THUOC', COUNT(*) FROM dbo.THUOC
 UNION ALL
-SELECT 'CHI_TIET_DON_THUOC', COUNT(*)
-FROM CHI_TIET_DON_THUOC;
+SELECT N'CHI_TIET_DON_THUOC', COUNT(*)
+FROM dbo.CHI_TIET_DON_THUOC;
 
 
 -- 02. Kiem tra lien ket bac si va nhan su
@@ -38,9 +43,9 @@ SELECT
     ns.HoTen,
     bs.ChuyenKhoa,
     k.TenKhoa
-FROM BAC_SI bs
-JOIN NHAN_SU ns ON bs.MaNS = ns.MaNS
-JOIN KHOA k ON ns.MaKhoa = k.MaKhoa
+FROM dbo.BAC_SI bs
+JOIN dbo.NHAN_SU ns ON bs.MaNS = ns.MaNS
+JOIN dbo.KHOA k ON ns.MaKhoa = k.MaKhoa
 ORDER BY bs.MaNS;
 
 
@@ -54,11 +59,11 @@ SELECT
     kb.NgayKham,
     kb.ChanDoan,
     kb.TienKham
-FROM KHAM_BENH kb
-JOIN BENH_NHAN bn ON kb.MaBN = bn.MaBN
-JOIN BAC_SI bs ON kb.MaBS = bs.MaNS
-JOIN NHAN_SU ns ON bs.MaNS = ns.MaNS
-JOIN PHONG_KHAM pk ON kb.MaPhong = pk.MaPhong
+FROM dbo.KHAM_BENH kb
+JOIN dbo.BENH_NHAN bn ON kb.MaBN = bn.MaBN
+JOIN dbo.BAC_SI bs ON kb.MaBS = bs.MaNS
+JOIN dbo.NHAN_SU ns ON bs.MaNS = ns.MaNS
+JOIN dbo.PHONG_KHAM pk ON kb.MaPhong = pk.MaPhong
 ORDER BY kb.MaKham;
 
 
@@ -71,11 +76,11 @@ SELECT
     ct.SoLuong,
     ct.DonGiaBan,
     ct.SoLuong * ct.DonGiaBan AS ThanhTien
-FROM CHI_TIET_DON_THUOC ct
-JOIN DON_THUOC dt ON ct.MaDT = dt.MaDT
-JOIN KHAM_BENH kb ON dt.MaKham = kb.MaKham
-JOIN BENH_NHAN bn ON kb.MaBN = bn.MaBN
-JOIN THUOC t ON ct.MaThuoc = t.MaThuoc
+FROM dbo.CHI_TIET_DON_THUOC ct
+JOIN dbo.DON_THUOC dt ON ct.MaDT = dt.MaDT
+JOIN dbo.KHAM_BENH kb ON dt.MaKham = kb.MaKham
+JOIN dbo.BENH_NHAN bn ON kb.MaBN = bn.MaBN
+JOIN dbo.THUOC t ON ct.MaThuoc = t.MaThuoc
 ORDER BY dt.MaDT, t.MaThuoc;
 
 
@@ -84,4 +89,4 @@ ORDER BY dt.MaDT, t.MaThuoc;
 SELECT
     COUNT(*) AS TongLuotKham,
     SUM(TienKham) AS TongDoanhThuKham
-FROM KHAM_BENH;
+FROM dbo.KHAM_BENH;

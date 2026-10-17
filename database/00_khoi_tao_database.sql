@@ -1,8 +1,14 @@
+﻿-- ============================================
+-- BTL CO SO DU LIEU - HE THONG QUAN LY BENH VIEN
+-- PHIEN BAN MICROSOFT SQL SERVER (T-SQL)
+-- ============================================
+-- Tao database neu chua ton tai.
+-- SQL Server su dung NVARCHAR de luu tieng Viet Unicode.
+IF DB_ID(N'QuanLyBenhVien') IS NULL
+BEGIN
+    EXEC(N'CREATE DATABASE [QuanLyBenhVien];');
+END;
+GO
 
--- KHOI TAO CO SO DU LIEU QUAN LY BENH VIEN
-
-CREATE DATABASE IF NOT EXISTS QuanLyBenhVien
-CHARACTER SET utf8mb4
-COLLATE utf8mb4_unicode_ci;
-
-USE QuanLyBenhVien;
+USE [QuanLyBenhVien];
+GO
