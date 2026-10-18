@@ -1,22 +1,23 @@
-
--- ============================================
--- BTL CO SO DU LIEU
--- HE THONG QUAN LY BENH VIEN
--- BANG 05: PHONG_KHAM
+﻿-- ============================================
+-- BTL CO SO DU LIEU - HE THONG QUAN LY BENH VIEN
+-- PHIEN BAN MICROSOFT SQL SERVER (T-SQL)
 -- ============================================
 
-USE QuanLyBenhVien;
+USE [QuanLyBenhVien];
+GO
 
-CREATE TABLE PHONG_KHAM (
-    MaPhong VARCHAR(10) NOT NULL,
-    TenPhong VARCHAR(100) NOT NULL,
-    LoaiPhong VARCHAR(50),
-    MaKhoa VARCHAR(10),
+-- Tao bang PHONG_KHAM neu chua ton tai
+IF OBJECT_ID(N'dbo.PHONG_KHAM', N'U') IS NULL
+BEGIN
+    CREATE TABLE dbo.PHONG_KHAM (
+        MaPhong NVARCHAR(10) NOT NULL,
+        TenPhong NVARCHAR(100) NOT NULL,
+        LoaiPhong NVARCHAR(50) NULL,
+        MaKhoa NVARCHAR(10) NULL,
 
-    CONSTRAINT PK_PHONG_KHAM
-        PRIMARY KEY (MaPhong),
-
-    CONSTRAINT FK_PHONG_KHAM_KHOA
-        FOREIGN KEY (MaKhoa)
-        REFERENCES KHOA(MaKhoa)
-);
+        CONSTRAINT PK_PHONG_KHAM PRIMARY KEY (MaPhong),
+        CONSTRAINT FK_PHONG_KHAM_KHOA FOREIGN KEY (MaKhoa)
+            REFERENCES dbo.KHOA(MaKhoa)
+    );
+END;
+GO

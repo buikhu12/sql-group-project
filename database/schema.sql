@@ -1,237 +1,203 @@
-
--- ============================================
--- BTL CO SO DU LIEU
--- HE THONG QUAN LY BENH VIEN
--- SCHEMA TONG HOP 10 BANG
+﻿-- ============================================
+-- BTL CO SO DU LIEU - HE THONG QUAN LY BENH VIEN
+-- PHIEN BAN MICROSOFT SQL SERVER (T-SQL)
 -- ============================================
 
--- 00. KHOI TAO DATABASE
+-- Script tong hop: tao database va 10 bang theo thu tu khoa ngoai.
+IF DB_ID(N'QuanLyBenhVien') IS NULL
+BEGIN
+    EXEC(N'CREATE DATABASE [QuanLyBenhVien];');
+END;
+GO
 
-CREATE DATABASE IF NOT EXISTS QuanLyBenhVien
-CHARACTER SET utf8mb4
-COLLATE utf8mb4_unicode_ci;
+USE [QuanLyBenhVien];
+GO
 
-USE QuanLyBenhVien;
+-- 01. Bang KHOA
+IF OBJECT_ID(N'dbo.KHOA', N'U') IS NULL
+BEGIN
+    CREATE TABLE dbo.KHOA (
+        MaKhoa NVARCHAR(10) NOT NULL,
+        TenKhoa NVARCHAR(100) NOT NULL,
+        ViTriTang NVARCHAR(50) NULL,
 
+        CONSTRAINT PK_KHOA PRIMARY KEY (MaKhoa)
+    );
+END;
+GO
 
--- ============================================
--- 01. BANG KHOA
--- ============================================
+-- 02. Bang NHAN_SU
+IF OBJECT_ID(N'dbo.NHAN_SU', N'U') IS NULL
+BEGIN
+    CREATE TABLE dbo.NHAN_SU (
+        MaNS NVARCHAR(10) NOT NULL,
+        HoTen NVARCHAR(100) NOT NULL,
+        SoDienThoai NVARCHAR(15) NULL,
+        LuongCoBan DECIMAL(12,2) NOT NULL,
+        MaKhoa NVARCHAR(10) NOT NULL,
 
-CREATE TABLE IF NOT EXISTS KHOA (
-    MaKhoa VARCHAR(10) NOT NULL,
-    TenKhoa VARCHAR(100) NOT NULL,
-    ViTriTang VARCHAR(50),
+        CONSTRAINT PK_NHAN_SU PRIMARY KEY (MaNS),
+        CONSTRAINT FK_NHAN_SU_KHOA FOREIGN KEY (MaKhoa)
+            REFERENCES dbo.KHOA(MaKhoa),
+        CONSTRAINT CK_NHAN_SU_LUONG CHECK (LuongCoBan > 0)
+    );
+END;
+GO
 
-    CONSTRAINT PK_KHOA
-        PRIMARY KEY (MaKhoa)
-);
+-- 03. Bang BAC_SI
+IF OBJECT_ID(N'dbo.BAC_SI', N'U') IS NULL
+BEGIN
+    CREATE TABLE dbo.BAC_SI (
+        MaNS NVARCHAR(10) NOT NULL,
+        ChuyenKhoa NVARCHAR(100) NOT NULL,
+        SoChungChiHanhNghe NVARCHAR(30) NULL,
 
+        CONSTRAINT PK_BAC_SI PRIMARY KEY (MaNS),
+        CONSTRAINT FK_BAC_SI_NHAN_SU FOREIGN KEY (MaNS)
+            REFERENCES dbo.NHAN_SU(MaNS)
+    );
+END;
+GO
 
--- ============================================
--- 02. BANG NHAN_SU
--- ============================================
+-- Dung unique filtered index de cho phep nhieu NULL, nhung khong cho trung so chung chi.
+IF NOT EXISTS (
+    SELECT 1
+    FROM sys.indexes
+    WHERE object_id = OBJECT_ID(N'dbo.BAC_SI')
+      AND name = N'UQ_BAC_SI_CHUNG_CHI'
+)
+BEGIN
+    CREATE UNIQUE INDEX UQ_BAC_SI_CHUNG_CHI
+        ON dbo.BAC_SI(SoChungChiHanhNghe)
+        WHERE SoChungChiHanhNghe IS NOT NULL;
+END;
+GO
 
-CREATE TABLE IF NOT EXISTS NHAN_SU (
-    MaNS VARCHAR(10) NOT NULL,
-    HoTen VARCHAR(100) NOT NULL,
-    SoDienThoai VARCHAR(15),
-    LuongCoBan DECIMAL(12,2) NOT NULL,
-    MaKhoa VARCHAR(10) NOT NULL,
+-- 04. Bang Y_TA
+IF OBJECT_ID(N'dbo.Y_TA', N'U') IS NULL
+BEGIN
+    CREATE TABLE dbo.Y_TA (
+        MaNS NVARCHAR(10) NOT NULL,
+        CaTruc NVARCHAR(30) NOT NULL,
+        KhuVucPhuTrach NVARCHAR(100) NULL,
 
-    CONSTRAINT PK_NHAN_SU
-        PRIMARY KEY (MaNS),
+        CONSTRAINT PK_Y_TA PRIMARY KEY (MaNS),
+        CONSTRAINT FK_Y_TA_NHAN_SU FOREIGN KEY (MaNS)
+            REFERENCES dbo.NHAN_SU(MaNS)
+    );
+END;
+GO
 
-    CONSTRAINT FK_NHAN_SU_KHOA
-        FOREIGN KEY (MaKhoa)
-        REFERENCES KHOA(MaKhoa),
+-- 05. Bang PHONG_KHAM
+IF OBJECT_ID(N'dbo.PHONG_KHAM', N'U') IS NULL
+BEGIN
+    CREATE TABLE dbo.PHONG_KHAM (
+        MaPhong NVARCHAR(10) NOT NULL,
+        TenPhong NVARCHAR(100) NOT NULL,
+        LoaiPhong NVARCHAR(50) NULL,
+        MaKhoa NVARCHAR(10) NULL,
 
-    CONSTRAINT CK_NHAN_SU_LUONG
-        CHECK (LuongCoBan > 0)
-);
+        CONSTRAINT PK_PHONG_KHAM PRIMARY KEY (MaPhong),
+        CONSTRAINT FK_PHONG_KHAM_KHOA FOREIGN KEY (MaKhoa)
+            REFERENCES dbo.KHOA(MaKhoa)
+    );
+END;
+GO
 
+-- 06. Bang BENH_NHAN
+IF OBJECT_ID(N'dbo.BENH_NHAN', N'U') IS NULL
+BEGIN
+    CREATE TABLE dbo.BENH_NHAN (
+        MaBN NVARCHAR(10) NOT NULL,
+        HoTen NVARCHAR(100) NOT NULL,
+        NgaySinh DATE NOT NULL,
+        GioiTinh NVARCHAR(5) NULL,
+        SoBHYT NVARCHAR(20) NULL,
+        SoDienThoai NVARCHAR(15) NULL,
 
--- ============================================
--- 03. BANG BAC_SI
--- ============================================
+        CONSTRAINT PK_BENH_NHAN PRIMARY KEY (MaBN),
+        CONSTRAINT CK_BENH_NHAN_GIOI_TINH CHECK (GioiTinh IN (N'Nam', N'Nữ'))
+    );
+END;
+GO
 
-CREATE TABLE IF NOT EXISTS BAC_SI (
-    MaNS VARCHAR(10) NOT NULL,
-    ChuyenKhoa VARCHAR(100) NOT NULL,
-    SoChungChiHanhNghe VARCHAR(30),
+-- 07. Bang KHAM_BENH
+IF OBJECT_ID(N'dbo.KHAM_BENH', N'U') IS NULL
+BEGIN
+    CREATE TABLE dbo.KHAM_BENH (
+        MaKham NVARCHAR(10) NOT NULL,
+        MaBS NVARCHAR(10) NOT NULL,
+        MaBN NVARCHAR(10) NOT NULL,
+        MaPhong NVARCHAR(10) NOT NULL,
+        NgayKham DATETIME NOT NULL,
+        ChanDoan NVARCHAR(255) NULL,
+        TienKham DECIMAL(10,2) NULL,
 
-    CONSTRAINT PK_BAC_SI
-        PRIMARY KEY (MaNS),
+        CONSTRAINT PK_KHAM_BENH PRIMARY KEY (MaKham),
+        CONSTRAINT FK_KHAM_BENH_BAC_SI FOREIGN KEY (MaBS)
+            REFERENCES dbo.BAC_SI(MaNS),
+        CONSTRAINT FK_KHAM_BENH_BENH_NHAN FOREIGN KEY (MaBN)
+            REFERENCES dbo.BENH_NHAN(MaBN),
+        CONSTRAINT FK_KHAM_BENH_PHONG_KHAM FOREIGN KEY (MaPhong)
+            REFERENCES dbo.PHONG_KHAM(MaPhong),
+        CONSTRAINT CK_KHAM_BENH_TIEN CHECK (TienKham > 0)
+    );
+END;
+GO
 
-    CONSTRAINT FK_BAC_SI_NHAN_SU
-        FOREIGN KEY (MaNS)
-        REFERENCES NHAN_SU(MaNS),
+-- 08. Bang DON_THUOC
+IF OBJECT_ID(N'dbo.DON_THUOC', N'U') IS NULL
+BEGIN
+    CREATE TABLE dbo.DON_THUOC (
+        MaDT NVARCHAR(10) NOT NULL,
+        MaKham NVARCHAR(10) NOT NULL,
+        NgayKeDon DATE NOT NULL,
+        GhiChu NVARCHAR(255) NULL,
 
-    CONSTRAINT UQ_BAC_SI_CHUNG_CHI
-        UNIQUE (SoChungChiHanhNghe)
-);
+        CONSTRAINT PK_DON_THUOC PRIMARY KEY (MaDT),
+        CONSTRAINT FK_DON_THUOC_KHAM_BENH FOREIGN KEY (MaKham)
+            REFERENCES dbo.KHAM_BENH(MaKham),
+        CONSTRAINT UQ_DON_THUOC_MAKHAM UNIQUE (MaKham)
+    );
+END;
+GO
 
+-- 09. Bang THUOC
+IF OBJECT_ID(N'dbo.THUOC', N'U') IS NULL
+BEGIN
+    CREATE TABLE dbo.THUOC (
+        MaThuoc NVARCHAR(10) NOT NULL,
+        TenThuoc NVARCHAR(150) NOT NULL,
+        DonViTinh NVARCHAR(30) NOT NULL,
+        GiaNiemYet DECIMAL(10,2) NULL,
+        SoLuongTon INT NULL CONSTRAINT DF_THUOC_SoLuongTon DEFAULT (0),
 
--- ============================================
--- 04. BANG Y_TA
--- ============================================
+        CONSTRAINT PK_THUOC PRIMARY KEY (MaThuoc),
+        CONSTRAINT CK_THUOC_GIA CHECK (GiaNiemYet > 0),
+        CONSTRAINT CK_THUOC_SO_LUONG CHECK (SoLuongTon >= 0)
+    );
+END;
+GO
 
-CREATE TABLE IF NOT EXISTS Y_TA (
-    MaNS VARCHAR(10) NOT NULL,
-    CaTruc VARCHAR(30) NOT NULL,
-    KhuVucPhuTrach VARCHAR(100),
+-- 10. Bang CHI_TIET_DON_THUOC
+IF OBJECT_ID(N'dbo.CHI_TIET_DON_THUOC', N'U') IS NULL
+BEGIN
+    CREATE TABLE dbo.CHI_TIET_DON_THUOC (
+        MaDT NVARCHAR(10) NOT NULL,
+        MaThuoc NVARCHAR(10) NOT NULL,
+        SoLuong INT NOT NULL,
+        CachDung NVARCHAR(200) NULL,
+        DonGiaBan DECIMAL(10,2) NULL,
 
-    CONSTRAINT PK_Y_TA
-        PRIMARY KEY (MaNS),
+        CONSTRAINT PK_CHI_TIET_DON_THUOC PRIMARY KEY (MaDT, MaThuoc),
+        CONSTRAINT FK_CTDT_DON_THUOC FOREIGN KEY (MaDT)
+            REFERENCES dbo.DON_THUOC(MaDT),
+        CONSTRAINT FK_CTDT_THUOC FOREIGN KEY (MaThuoc)
+            REFERENCES dbo.THUOC(MaThuoc),
+        CONSTRAINT CK_CTDT_SO_LUONG CHECK (SoLuong > 0)
+    );
+END;
+GO
 
-    CONSTRAINT FK_Y_TA_NHAN_SU
-        FOREIGN KEY (MaNS)
-        REFERENCES NHAN_SU(MaNS)
-);
-
-
--- ============================================
--- 05. BANG PHONG_KHAM
--- ============================================
-
-CREATE TABLE IF NOT EXISTS PHONG_KHAM (
-    MaPhong VARCHAR(10) NOT NULL,
-    TenPhong VARCHAR(100) NOT NULL,
-    LoaiPhong VARCHAR(50),
-    MaKhoa VARCHAR(10),
-
-    CONSTRAINT PK_PHONG_KHAM
-        PRIMARY KEY (MaPhong),
-
-    CONSTRAINT FK_PHONG_KHAM_KHOA
-        FOREIGN KEY (MaKhoa)
-        REFERENCES KHOA(MaKhoa)
-);
-
-
--- ============================================
--- 06. BANG BENH_NHAN
--- ============================================
-
-CREATE TABLE IF NOT EXISTS BENH_NHAN (
-    MaBN VARCHAR(10) NOT NULL,
-    HoTen VARCHAR(100) NOT NULL,
-    NgaySinh DATE NOT NULL,
-    GioiTinh VARCHAR(5),
-    SoBHYT VARCHAR(20),
-    SoDienThoai VARCHAR(15),
-
-    CONSTRAINT PK_BENH_NHAN
-        PRIMARY KEY (MaBN),
-
-    CONSTRAINT CK_BENH_NHAN_GIOI_TINH
-        CHECK (GioiTinh IN ('Nam', 'Nữ'))
-);
-
-
--- ============================================
--- 07. BANG KHAM_BENH
--- ============================================
-
-CREATE TABLE IF NOT EXISTS KHAM_BENH (
-    MaKham VARCHAR(10) NOT NULL,
-    MaBS VARCHAR(10) NOT NULL,
-    MaBN VARCHAR(10) NOT NULL,
-    MaPhong VARCHAR(10) NOT NULL,
-    NgayKham DATETIME NOT NULL,
-    ChanDoan VARCHAR(255),
-    TienKham DECIMAL(10,2),
-
-    CONSTRAINT PK_KHAM_BENH
-        PRIMARY KEY (MaKham),
-
-    CONSTRAINT FK_KHAM_BENH_BAC_SI
-        FOREIGN KEY (MaBS)
-        REFERENCES BAC_SI(MaNS),
-
-    CONSTRAINT FK_KHAM_BENH_BENH_NHAN
-        FOREIGN KEY (MaBN)
-        REFERENCES BENH_NHAN(MaBN),
-
-    CONSTRAINT FK_KHAM_BENH_PHONG_KHAM
-        FOREIGN KEY (MaPhong)
-        REFERENCES PHONG_KHAM(MaPhong),
-
-    CONSTRAINT CK_KHAM_BENH_TIEN
-        CHECK (TienKham > 0)
-);
-
-
--- ============================================
--- 08. BANG DON_THUOC
--- ============================================
-
-CREATE TABLE IF NOT EXISTS DON_THUOC (
-    MaDT VARCHAR(10) NOT NULL,
-    MaKham VARCHAR(10) NOT NULL,
-    NgayKeDon DATE NOT NULL,
-    GhiChu VARCHAR(255),
-
-    CONSTRAINT PK_DON_THUOC
-        PRIMARY KEY (MaDT),
-
-    CONSTRAINT FK_DON_THUOC_KHAM_BENH
-        FOREIGN KEY (MaKham)
-        REFERENCES KHAM_BENH(MaKham),
-
-    CONSTRAINT UQ_DON_THUOC_MAKHAM
-        UNIQUE (MaKham)
-);
-
-
--- ============================================
--- 09. BANG THUOC
--- ============================================
-
-CREATE TABLE IF NOT EXISTS THUOC (
-    MaThuoc VARCHAR(10) NOT NULL,
-    TenThuoc VARCHAR(150) NOT NULL,
-    DonViTinh VARCHAR(30) NOT NULL,
-    GiaNiemYet DECIMAL(10,2),
-    SoLuongTon INT,
-
-    CONSTRAINT PK_THUOC
-        PRIMARY KEY (MaThuoc),
-
-    CONSTRAINT CK_THUOC_GIA
-        CHECK (GiaNiemYet > 0),
-
-    CONSTRAINT CK_THUOC_SO_LUONG
-        CHECK (SoLuongTon >= 0)
-);
-
-
--- ============================================
--- 10. BANG CHI_TIET_DON_THUOC
--- ============================================
-
-CREATE TABLE IF NOT EXISTS CHI_TIET_DON_THUOC (
-    MaDT VARCHAR(10) NOT NULL,
-    MaThuoc VARCHAR(10) NOT NULL,
-    SoLuong INT NOT NULL,
-    CachDung VARCHAR(200),
-    DonGiaBan DECIMAL(10,2),
-
-    CONSTRAINT PK_CHI_TIET_DON_THUOC
-        PRIMARY KEY (MaDT, MaThuoc),
-
-    CONSTRAINT FK_CTDT_DON_THUOC
-        FOREIGN KEY (MaDT)
-        REFERENCES DON_THUOC(MaDT),
-
-    CONSTRAINT FK_CTDT_THUOC
-        FOREIGN KEY (MaThuoc)
-        REFERENCES THUOC(MaThuoc),
-
-    CONSTRAINT CK_CTDT_SO_LUONG
-        CHECK (SoLuong > 0)
-);
-
--- ============================================
--- KET THUC SCHEMA
--- ============================================
+PRINT N'Schema QuanLyBenhVien da duoc tao/kiem tra.';
+GO
