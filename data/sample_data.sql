@@ -1,296 +1,236 @@
-﻿-- ============================================
--- BTL CO SO DU LIEU - HE THONG QUAN LY BENH VIEN
--- PHIEN BAN MICROSOFT SQL SERVER (T-SQL)
--- ============================================
-
-USE [QuanLyBenhVien];
+INSERT INTO BENH_VIEN (MaBV, TenBV, DiaChi) VALUES
+('BV01', N'Bệnh viện Đa khoa Trung Ương', N'123 Đường Nguyễn Huệ, Quận 1, TP.HCM'),
+('BV02', N'Bệnh viện Chợ Rẫy', N'201B Nguyễn Chí Thanh, Phường 12, Quận 5, TP.HCM'),
+('BV03', N'Bệnh viện Bạch Mai', N'78 Giải Phóng, Phương Mai, Đống Đa, Hà Nội'),
+('BV04', N'Bệnh viện Việt Đức', N'40 Tràng Thi, Hoàn Kiếm, Hà Nội'),
+('BV05', N'Bệnh viện Nhi Đồng 1', N'341 Sư Vạn Hạnh, Phường 10, Quận 10, TP.HCM'),
+('BV06', N'Bệnh viện Từ Dũ', N'284 Cống Quỳnh, Phường Phạm Ngũ Lão, Quận 1, TP.HCM'),
+('BV07', N'Bệnh viện Nhân dân 115', N'527 Sư Vạn Hạnh, Phường 12, Quận 10, TP.HCM'),
+('BV08', N'Bệnh viện Đại học Y Dược TP.HCM', N'215 Hồng Bàng, Phường 11, Quận 5, TP.HCM'),
+('BV09', N'Bệnh viện K', N'30 Phố Cầu Bươu, Tân Triều, Thanh Trì, Hà Nội'),
+('BV10', N'Bệnh viện Mắt Trung Ương', N'85 Bà Triệu, Nguyễn Du, Hai Bà Trưng, Hà Nội'),
+('BV11', N'Bệnh viện Tai Mũi Họng Trung Ương', N'78 Giải Phóng, Phương Mai, Đống Đa, Hà Nội'),
+('BV12', N'Bệnh viện Phổi Trung Ương', N'463 Hoàng Hoa Thám, Ba Đình, Hà Nội'),
+('BV13', N'Bệnh viện Tim Hà Nội', N'92 Trần Hưng Đạo, Hoàn Kiếm, Hà Nội'),
+('BV14', N'Bệnh viện Đa khoa Tâm Anh', N'2B Phổ Quang, Phường 2, Tân Bình, TP.HCM'),
+('BV15', N'Bệnh viện Đa khoa Hoàn Mỹ', N'124 Trần Hưng Đạo, Ninh Kiều, Cần Thơ');
 GO
 
--- ========================================================
--- Script chèn dữ liệu mẫu (Sample Data DML)
--- ========================================================
+INSERT INTO KHOA (MaKhoa, TenKhoa, MaBV) VALUES
+('K01', N'Khoa Khám bệnh', 'BV01'),
+('K02', N'Khoa Nội tổng hợp', 'BV01'),
+('K03', N'Khoa Ngoại tổng quát', 'BV02'),
+('K04', N'Khoa Cấp cứu', 'BV02'),
+('K05', N'Khoa Nhi', 'BV05'),
+('K06', N'Khoa Phụ sản', 'BV06'),
+('K07', N'Khoa Tim mạch', 'BV08'),
+('K08', N'Khoa Mắt', 'BV10'),
+('K09', N'Khoa Tai Mũi Họng', 'BV11'),
+('K10', N'Khoa Ung bướu', 'BV09'),
+('K11', N'Khoa Chẩn đoán hình ảnh', 'BV01'),
+('K12', N'Khoa Xét nghiệm', 'BV01'),
+('K13', N'Khoa Y học cổ truyền', 'BV07'),
+('K14', N'Khoa Răng Hàm Mặt', 'BV08'),
+('K15', N'Khoa Da liễu', 'BV03');
+GO
 
--- Viết các câu lệnh INSERT INTO ở đây:
+INSERT INTO PHONG_KHAM (MaPK, TenPK, MaKhoa) VALUES
+('PK101', N'Phòng khám Nội 1', 'K02'),
+('PK102', N'Phòng khám Nội 2', 'K02'),
+('PK201', N'Phòng khám Ngoại tổng hợp', 'K03'),
+('PK301', N'Phòng khám Cấp cứu A', 'K04'),
+('PK302', N'Phòng khám Cấp cứu B', 'K04'),
+('PK401', N'Phòng khám Nhi chất lượng cao', 'K05'),
+('PK501', N'Phòng khám Sản phụ khoa', 'K06'),
+('PK601', N'Phòng khám Tim mạch', 'K07'),
+('PK701', N'Phòng khám Mắt kỹ thuật cao', 'K08'),
+('PK801', N'Phòng khám Tai Mũi Họng', 'K09'),
+('PK901', N'Phòng khám Ung bướu', 'K10'),
+('PK1001', N'Phòng Siêu âm - X-Quang', 'K11'),
+('PK1101', N'Phòng lấy mẫu xét nghiệm', 'K12'),
+('PK1201', N'Phòng khám Răng Hàm Mặt', 'K14'),
+('PK1301', N'Phòng khám Da liễu', 'K15');
+GO
 
+INSERT INTO BENH_NHAN (MaBN, HoTen, NgaySinh, GioiTinh, DiaChi, SoDienThoai) VALUES
+('BN01', N'Nguyễn Văn An', '1985-05-12', N'Nam', N'Hà Nội', '0901112233'),
+('BN02', N'Trần Thị Bình', '1990-08-20', N'Nữ', N'Hải Phòng', '0912223344'),
+('BN03', N'Lê Hoàng Cường', '1975-02-15', N'Nam', N'Đà Nẵng', '0983334455'),
+('BN04', N'Phạm Thị Dung', '2000-11-05', N'Nữ', N'TP.HCM', '0974445566'),
+('BN05', N'Hoàng Văn Em', '1962-12-30', N'Nam', N'Cần Thơ', '0935556677'),
+('BN06', N'Vũ Thị Phương', '1995-03-22', N'Nữ', N'Nam Định', '0946667788'),
+('BN07', N'Bùi Văn Giáp', '1988-07-14', N'Nam', N'Nghệ An', '0927778899'),
+('BN08', N'Đặng Thị Hoa', '2012-09-09', N'Nữ', N'Bình Dương', '0968889900'),
+('BN09', N'Ngô Văn Inh', '2005-04-18', N'Nam', N'Đồng Nai', '0909990011'),
+('BN10', N'Dương Thị Kim', '1955-10-01', N'Nữ', N'Hà Nội', '0910001122'),
+('BN11', N'Lý Văn Long', '1992-06-25', N'Nam', N'Quảng Ninh', '0981112233'),
+('BN12', N'Hồ Thị Mai', '1983-01-19', N'Nữ', N'Thanh Hóa', '0972223344'),
+('BN13', N'Đỗ Văn Nam', '1998-08-11', N'Nam', N'Hưng Yên', '0933334455'),
+('BN14', N'Tạ Thị Oanh', '2003-12-25', N'Nữ', N'Bắc Ninh', '0944445566'),
+('BN15', N'Mai Văn Phúc', '1970-04-30', N'Nam', N'Vĩnh Phúc', '0925556677');
+GO
 
+INSERT INTO THUOC (MaThuoc, TenThuoc, DonGia, DonViTinh) VALUES
+('T01', N'Paracetamol 500mg', 500.00, N'Viên'),
+('T02', N'Amoxicillin 500mg', 2000.00, N'Viên'),
+('T03', N'Ibuprofen 400mg', 1200.00, N'Viên'),
+('T04', N'Omeprazol 20mg', 3000.00, N'Viên'),
+('T05', N'Vitamin C 500mg', 300.00, N'Viên'),
+('T06', N'Aspirin 81mg', 1000.00, N'Viên'),
+('T07', N'Cefuroxim 500mg', 5000.00, N'Viên'),
+('T08', N'Cetirizin 10mg', 800.00, N'Viên'),
+('T09', N'Berberin', 400.00, N'Viên'),
+('T10', N'Siro Ho Acemol', 35000.00, N'Chai'),
+('T11', N'Natri Clorid 0.9%', 10000.00, N'Chai'),
+('T12', N'Insulin Injection', 150000.00, N'Lọ'),
+('T13', N'Salbutamol 4mg', 600.00, N'Viên'),
+('T14', N'Glucophage 850mg', 2500.00, N'Viên'),
+('T15', N'Smecta', 4000.00, N'Gói');
+GO
 
--- ============================================
--- BTL CO SO DU LIEU
--- HE THONG QUAN LY BENH VIEN
--- DU LIEU MAU CHO 10 BANG
--- ============================================
+INSERT INTO XET_NGHIEM (MaXN, TenXN, ChiPhi) VALUES
+('XN01', N'Xét nghiệm máu tổng quát', 150000.00),
+('XN02', N'Đường huyết (Glucose)', 50000.00),
+('XN03', N'Cholesterol toàn phần', 70000.00),
+('XN04', N'Men gan (AST, ALT)', 120000.00),
+('XN05', N'Chức năng thận (Ure, Creatinin)', 90000.00),
+('XN06', N'Tổng phân tích nước tiểu', 60000.00),
+('XN07', N'Điện giải đồ', 100000.00),
+('XN08', N'Test nhanh SARS-CoV-2', 80000.00),
+('XN09', N'Siêu âm tổng quát ổ bụng', 200000.00),
+('XN10', N'Chụp X-Quang Phổi thẳng', 180000.00),
+('XN11', N'Điện tâm đồ (ECG)', 120000.00),
+('XN12', N'Siêu âm tim', 350000.00),
+('XN13', N'Nội soi dạ dày', 500000.00),
+('XN14', N'Chụp cộng hưởng từ (MRI)', 2500000.00),
+('XN15', N'Chụp cắt lớp vi tính (CT Scan)', 1500000.00);
+GO
 
--- ============================================
--- 01. DU LIEU BANG KHOA
--- ============================================
+INSERT INTO BAC_SI (MaBS, HoTen, ChuyenKhoa, SoDienThoai, MaKhoa) VALUES
+('BS01', N'PGS.TS Nguyễn Văn Khoa', N'Nội tổng hợp', '0911122334', 'K02'),
+('BS02', N'TS.BS Trần Thị Thảo', N'Nội tiết', '0922233445', 'K02'),
+('BS03', N'BS.CKI Lê Văn Hùng', N'Ngoại tổng quát', '0933344556', 'K03'),
+('BS04', N'ThS.BS Phạm Minh Tuấn', N'Cấp cứu', '0944455667', 'K04'),
+('BS05', N'BS.CKII Hoàng Thị Lan', N'Nhi khoa', '0955566778', 'K05'),
+('BS06', N'PGS.TS Vũ Văn Minh', N'Sản phụ khoa', '0966677889', 'K06'),
+('BS07', N'TS.BS Bùi Quốc Huy', N'Tim mạch', '0977788990', 'K07'),
+('BS08', N'BS.CKI Đặng Văn Hùng', N'Mắt', '0988899001', 'K08'),
+('BS09', N'ThS.BS Ngô Thị Mai', N'Tai Mũi Họng', '0999001122', 'K09'),
+('BS10', N'PGS.TS Dương Công Thành', N'Ung bướu', '0900112233', 'K10'),
+('BS11', N'BS.CKI Lý Văn Nam', N'Chẩn đoán hình ảnh', '0911223344', 'K11'),
+('BS12', N'BS.CKI Hồ Thị Hương', N'Xét nghiệm', '0922334455', 'K12'),
+('BS13', N'ThS.BS Đỗ Văn Phúc', N'Y học cổ truyền', '0933445566', 'K13'),
+('BS14', N'BS.CKI Tạ Minh Tâm', N'Răng Hàm Mặt', '0944556677', 'K14'),
+('BS15', N'TS.BS Mai Văn Đức', N'Da liễu', '0955667788', 'K15');
+GO
 
-INSERT INTO dbo.KHOA (MaKhoa, TenKhoa, ViTriTang)
-VALUES
-(N'K_NOI', N'Khoa Nội', N'Tầng 2'),
-(N'K_NGOAI', N'Khoa Ngoại', N'Tầng 3'),
-(N'K_NHI', N'Khoa Nhi', N'Tầng 4'),
-(N'K_CAPCUU', N'Khoa Cấp cứu', N'Tầng 1'),
-(N'K_DUOC', N'Khoa Dược', N'Tầng 1');
+INSERT INTO Y_TA (MaYT, HoTen, SoDienThoai) VALUES
+('YT01', N'Nguyễn Thị Hồng', '0912345678'),
+('YT02', N'Trần Văn Nam', '0923456789'),
+('YT03', N'Lê Thị Ngọc', '0934567890'),
+('YT04', N'Phạm Văn Bình', '0945678901'),
+('YT05', N'Hoàng Thị Dung', '0956789012'),
+('YT06', N'Vũ Văn Hải', '0967890123'),
+('YT07', N'Bùi Thị Hoa', '0978901234'),
+('YT08', N'Đặng Văn Khoa', '0989012345'),
+('YT09', N'Ngô Thị Lan', '0990123456'),
+('YT10', N'Dương Văn Minh', '0901234567'),
+('YT11', N'Lý Thị Nga', '0912345670'),
+('YT12', N'Hồ Văn Phúc', '0923456701'),
+('YT13', N'Đỗ Thị Quỳnh', '0934567012'),
+('YT14', N'Tạ Văn Sơn', '0945670123'),
+('YT15', N'Mai Thị Thủy', '0956701234');
+GO
 
+INSERT INTO GIUONG_BENH (MaGiuong, TrangThai, MaBN) VALUES
+('GB01', N'Đang sử dụng', 'BN01'),
+('GB02', N'Đang sử dụng', 'BN03'),
+('GB03', N'Đang sử dụng', 'BN05'),
+('GB04', N'Đang sử dụng', 'BN08'),
+('GB05', N'Đang sử dụng', 'BN10'),
+('GB06', N'Trống', NULL),
+('GB07', N'Trống', NULL),
+('GB08', N'Trống', NULL),
+('GB09', N'Trống', NULL),
+('GB10', N'Trống', NULL),
+('GB11', N'Bảo trì', NULL),
+('GB12', N'Đang khử khuẩn', NULL),
+('GB13', N'Trống', NULL),
+('GB14', N'Đang sử dụng', 'BN12'),
+('GB15', N'Trống', NULL);
+GO
 
--- ============================================
--- 02. DU LIEU BANG NHAN_SU
--- ============================================
+INSERT INTO LICH_LAM_VIEC (MaLich, NgayLamViec, CaLamViec, MaBS) VALUES
+('L01', '2026-03-01', N'Ca Sáng', 'BS01'),
+('L02', '2026-03-01', N'Ca Chiều', 'BS02'),
+('L03', '2026-03-01', N'Ca Trực Đêm', 'BS04'),
+('L04', '2026-03-02', N'Ca Sáng', 'BS03'),
+('L05', '2026-03-02', N'Ca Chiều', 'BS05'),
+('L06', '2026-03-02', N'Ca Trực Đêm', 'BS06'),
+('L07', '2026-03-03', N'Ca Sáng', 'BS07'),
+('L08', '2026-03-03', N'Ca Chiều', 'BS08'),
+('L09', '2026-03-03', N'Ca Trực Đêm', 'BS09'),
+('L10', '2026-03-04', N'Ca Sáng', 'BS10'),
+('L11', '2026-03-04', N'Ca Chiều', 'BS11'),
+('L12', '2026-03-04', N'Ca Trực Đêm', 'BS12'),
+('L13', '2026-03-05', N'Ca Sáng', 'BS13'),
+('L14', '2026-03-05', N'Ca Chiều', 'BS14'),
+('L15', '2026-03-05', N'Ca Trực Đêm', 'BS15');
+GO
 
-INSERT INTO dbo.NHAN_SU
-(MaNS, HoTen, SoDienThoai, LuongCoBan, MaKhoa)
-VALUES
-(N'NS001', N'Nguyễn Văn An', N'0901000001', 15000000, N'K_NOI'),
-(N'NS002', N'Trần Thị Bình', N'0901000002', 16000000, N'K_NOI'),
-(N'NS003', N'Lê Minh Đức', N'0901000003', 17000000, N'K_NGOAI'),
-(N'NS004', N'Phạm Quốc Huy', N'0901000004', 18000000, N'K_NGOAI'),
-(N'NS005', N'Hoàng Thị Lan', N'0901000005', 15500000, N'K_NHI'),
-(N'NS006', N'Đỗ Văn Minh', N'0901000006', 17500000, N'K_CAPCUU'),
-(N'NS007', N'Vũ Thu Hà', N'0901000007', 16500000, N'K_NHI'),
-(N'NS008', N'Nguyễn Thị Mai', N'0901000008', 8500000, N'K_NOI'),
-(N'NS009', N'Trần Văn Nam', N'0901000009', 9000000, N'K_NGOAI'),
-(N'NS010', N'Lê Thị Hoa', N'0901000010', 8200000, N'K_NHI'),
-(N'NS011', N'Phạm Thị Hương', N'0901000011', 9500000, N'K_CAPCUU'),
-(N'NS012', N'Bùi Văn Long', N'0901000012', 8800000, N'K_NOI');
+INSERT INTO KHAM_BENH (MaLanKham, MaBN, MaBS, NgayKham, TrieuChung, ChanDoan) VALUES
+('LK01', 'BN01', 'BS01', '2026-03-01 08:30:00', N'Sốt, ho, đau họng', N'Viêm họng cấp'),
+('LK02', 'BN02', 'BS02', '2026-03-01 09:15:00', N'Mệt mỏi, khát nước nhiều', N'Đái tháo đường type 2'),
+('LK03', 'BN03', 'BS03', '2026-03-01 10:00:00', N'Đau nhói vùng hố chậu phải', N'Viêm ruột thừa cấp'),
+('LK04', 'BN04', 'BS04', '2026-03-01 11:00:00', N'Khó thở, tức ngực sau va chạm', N'Chấn thương ngực kín'),
+('LK05', 'BN05', 'BS05', '2026-03-02 08:00:00', N'Sốt cao, co giật nhẹ', N'Sốt cao co giật / Viêm amidan'),
+('LK06', 'BN06', 'BS06', '2026-03-02 08:45:00', N'Đau bụng âm ỉ, chậm kinh', N'Thai nghén bình thường 8 tuần'),
+('LK07', 'BN07', 'BS07', '2026-03-02 09:30:00', N'Đau tức ngực trái lan ra tay', N'Thiếu máu cơ tim cục bộ'),
+('LK08', 'BN08', 'BS08', '2026-03-02 10:15:00', N'Mờ mắt, mỏi mắt khi nhìn xa', N'Cận thị học đường'),
+('LK09', 'BN09', 'BS09', '2026-03-03 08:00:00', N'Ù tai, đau nhức tai phải', N'Viêm tai giữa cấp'),
+('LK10', 'BN10', 'BS10', '2026-03-03 08:30:00', N'Sụt cân không rõ nguyên nhân', N'Theo dõi u xơ tuyến giáp'),
+('LK11', 'BN11', 'BS11', '2026-03-03 09:00:00', N'Đau lưng dữ dội sau khi bê nặng', N'Thoát vị đĩa đệm cột sống thắt lưng'),
+('LK12', 'BN12', 'BS12', '2026-03-03 09:30:00', N'Sốt xuất huyết ngày thứ 3', N'Theo dõi sốt xuất huyết Dengue'),
+('LK13', 'BN13', 'BS13', '2026-03-04 08:00:00', N'Đau mỏi vai gáy, mất ngủ', N'Hội chứng cổ vai gáy'),
+('LK14', 'BN14', 'BS14', '2026-03-04 08:30:00', N'Đau nhức răng số 8 hàm dưới', N'Viêm lợi trùm răng khôn'),
+('LK15', 'BN15', 'BS15', '2026-03-04 09:00:00', N'Ngứa da, nổi mẩn đỏ từng mảng', N'Mày đay cấp tính');
+GO
 
+INSERT INTO DON_THUOC (MaDonThuoc, MaLanKham, NgayLap) VALUES
+('DT01', 'LK01', '2026-03-01 09:00:00'),
+('DT02', 'LK02', '2026-03-01 09:45:00'),
+('DT03', 'LK03', '2026-03-01 10:30:00'),
+('DT04', 'LK04', '2026-03-01 11:30:00'),
+('DT05', 'LK05', '2026-03-02 08:30:00'),
+('DT06', 'LK06', '2026-03-02 09:15:00'),
+('DT07', 'LK07', '2026-03-02 10:00:00'),
+('DT08', 'LK08', '2026-03-02 10:45:00'),
+('DT09', 'LK09', '2026-03-03 08:30:00'),
+('DT10', 'LK10', '2026-03-03 09:00:00'),
+('DT11', 'LK11', '2026-03-03 09:30:00'),
+('DT12', 'LK12', '2026-03-03 10:00:00'),
+('DT13', 'LK13', '2026-03-04 08:30:00'),
+('DT14', 'LK14', '2026-03-04 09:00:00'),
+('DT15', 'LK15', '2026-03-04 09:30:00');
+GO
 
-
--- ============================================
--- 03. DU LIEU BANG BAC_SI
--- ============================================
-
-INSERT INTO dbo.BAC_SI
-(MaNS, ChuyenKhoa, SoChungChiHanhNghe)
-VALUES
-(N'NS001', N'Tim mạch', N'CCHN001'),
-(N'NS002', N'Nội tổng quát', N'CCHN002'),
-(N'NS003', N'Ngoại tổng quát', N'CCHN003'),
-(N'NS004', N'Chấn thương chỉnh hình', N'CCHN004'),
-(N'NS005', N'Nhi khoa', N'CCHN005'),
-(N'NS006', N'Hồi sức cấp cứu', N'CCHN006'),
-(N'NS007', N'Nhi tổng quát', N'CCHN007');
-
-
-
--- ============================================
--- 04. DU LIEU BANG Y_TA
--- ============================================
-
-INSERT INTO dbo.Y_TA
-(MaNS, CaTruc, KhuVucPhuTrach)
-VALUES
-(N'NS008', N'Sáng', N'Khoa Nội'),
-(N'NS009', N'Chiều', N'Khoa Ngoại'),
-(N'NS010', N'Sáng', N'Khoa Nhi'),
-(N'NS011', N'Đêm', N'Khoa Cấp cứu'),
-(N'NS012', N'Chiều', N'Khoa Nội');
-
--- ============================================
--- 05. DU LIEU BANG PHONG_KHAM
--- ============================================
-
-INSERT INTO dbo.PHONG_KHAM
-(MaPhong, TenPhong, LoaiPhong, MaKhoa)
-VALUES
-(N'PK101', N'Phòng khám Nội tổng quát 1', N'Khám tổng quát', N'K_NOI'),
-(N'PK102', N'Phòng khám Tim mạch', N'Khám chuyên khoa', N'K_NOI'),
-(N'PK201', N'Phòng khám Ngoại tổng quát', N'Khám chuyên khoa', N'K_NGOAI'),
-(N'PK202', N'Phòng khám Chấn thương', N'Khám chuyên khoa', N'K_NGOAI'),
-(N'PK301', N'Phòng khám Nhi 1', N'Khám nhi', N'K_NHI'),
-(N'PK302', N'Phòng khám Nhi 2', N'Khám nhi', N'K_NHI'),
-(N'PK401', N'Phòng Cấp cứu 1', N'Cấp cứu', N'K_CAPCUU'),
-(N'PK402', N'Phòng Cấp cứu 2', N'Cấp cứu', N'K_CAPCUU');
-
-
--- ============================================
--- 06. DU LIEU BANG BENH_NHAN
--- ============================================
-
-INSERT INTO dbo.BENH_NHAN
-(MaBN, HoTen, NgaySinh, GioiTinh, SoBHYT, SoDienThoai)
-VALUES
-(N'BN0001', N'Nguyễn Văn Hùng', N'1976-03-12', N'Nam', N'BHYT00000001', N'0912000001'),
-(N'BN0002', N'Trần Thị Lan', N'2001-07-25', N'Nữ', N'BHYT00000002', N'0912000002'),
-(N'BN0003', N'Lê Quốc Bảo', N'1995-11-08', N'Nam', N'BHYT00000003', N'0912000003'),
-(N'BN0004', N'Phạm Thị Hoa', N'1988-02-17', N'Nữ', N'BHYT00000004', N'0912000004'),
-(N'BN0005', N'Nguyễn Minh Khang', N'2018-06-20', N'Nam', N'BHYT00000005', N'0912000005'),
-(N'BN0006', N'Đỗ Thị Mai', N'2004-09-14', N'Nữ', N'BHYT00000006', N'0912000006'),
-(N'BN0007', N'Vũ Gia Huy', N'2019-12-01', N'Nam', N'BHYT00000007', N'0912000007'),
-(N'BN0008', N'Hoàng Văn Đức', N'1968-04-05', N'Nam', N'BHYT00000008', N'0912000008'),
-(N'BN0009', N'Bùi Thị Ngọc', N'1985-08-29', N'Nữ', N'BHYT00000009', N'0912000009'),
-(N'BN0010', N'Nguyễn Thành Long', N'1999-01-16', N'Nam', N'BHYT00000010', N'0912000010'),
-(N'BN0011', N'Trần Văn Hải', N'1983-05-22', N'Nam', N'BHYT00000011', N'0912000011'),
-(N'BN0012', N'Lê Ngọc Anh', N'2017-10-10', N'Nữ', N'BHYT00000012', N'0912000012'),
-(N'BN0013', N'Phạm Đức Anh', N'2000-03-30', N'Nam', N'BHYT00000013', N'0912000013'),
-(N'BN0014', N'Đặng Khánh Linh', N'2020-07-07', N'Nữ', N'BHYT00000014', N'0912000014'),
-(N'BN0015', N'Nguyễn Văn Nam', N'1971-09-19', N'Nam', N'BHYT00000015', N'0912000015'),
-(N'BN0016', N'Trịnh Thị Hạnh', N'1992-12-26', N'Nữ', NULL, N'0912000016'),
-(N'BN0017', N'Đỗ Minh Tuấn', N'1980-04-11', N'Nam', N'BHYT00000017', N'0912000017'),
-(N'BN0018', N'Vũ Thị Thu', N'1979-08-03', N'Nữ', N'BHYT00000018', N'0912000018'),
-(N'BN0019', N'Hoàng Gia Bảo', N'2016-02-28', N'Nam', N'BHYT00000019', N'0912000019'),
-(N'BN0020', N'Bùi Thu Trang', N'2001-11-15', N'Nữ', NULL, N'0912000020');
-
-
--- ============================================
--- 07. DU LIEU BANG KHAM_BENH
--- ============================================
-
-INSERT INTO dbo.KHAM_BENH
-(MaKham, MaBS, MaBN, MaPhong, NgayKham, ChanDoan, TienKham)
-VALUES
-(N'KB0001', N'NS001', N'BN0001', N'PK102', N'2026-10-01 08:10:00', N'Tăng huyết áp', 150000),
-(N'KB0002', N'NS002', N'BN0002', N'PK101', N'2026-10-01 09:05:00', N'Viêm họng', 120000),
-(N'KB0003', N'NS003', N'BN0003', N'PK201', N'2026-10-02 08:30:00', N'Viêm mô mềm', 150000),
-(N'KB0004', N'NS004', N'BN0004', N'PK202', N'2026-10-02 10:15:00', N'Đau khớp gối', 180000),
-(N'KB0005', N'NS005', N'BN0005', N'PK301', N'2026-10-03 08:20:00', N'Sốt siêu vi', 100000),
-(N'KB0006', N'NS006', N'BN0006', N'PK401', N'2026-10-03 14:10:00', N'Mất nước nhẹ', 200000),
-(N'KB0007', N'NS007', N'BN0007', N'PK302', N'2026-10-04 09:00:00', N'Viêm mũi dị ứng', 100000),
-(N'KB0008', N'NS001', N'BN0008', N'PK102', N'2026-10-04 10:30:00', N'Tăng huyết áp', 150000),
-(N'KB0009', N'NS002', N'BN0009', N'PK101', N'2026-10-05 08:15:00', N'Viêm dạ dày', 120000),
-(N'KB0010', N'NS003', N'BN0010', N'PK201', N'2026-10-05 09:45:00', N'Viêm da nhẹ', 150000),
-(N'KB0011', N'NS004', N'BN0011', N'PK202', N'2026-10-06 08:00:00', N'Đau cơ', 180000),
-(N'KB0012', N'NS005', N'BN0012', N'PK301', N'2026-10-06 10:20:00', N'Thiếu vi chất', 100000),
-(N'KB0013', N'NS006', N'BN0013', N'PK402', N'2026-10-07 14:00:00', N'Cơn hen nhẹ', 200000),
-(N'KB0014', N'NS007', N'BN0014', N'PK302', N'2026-10-07 15:30:00', N'Ho khan', 100000),
-(N'KB0015', N'NS001', N'BN0015', N'PK102', N'2026-10-08 08:30:00', N'Tăng huyết áp', 150000),
-(N'KB0016', N'NS002', N'BN0016', N'PK101', N'2026-10-08 09:20:00', N'Rối loạn tiêu hóa', 120000),
-(N'KB0017', N'NS003', N'BN0017', N'PK201', N'2026-10-09 08:45:00', N'Viêm da do nấm', 150000),
-(N'KB0018', N'NS004', N'BN0018', N'PK202', N'2026-10-09 10:10:00', N'Đau xương khớp', 180000),
-(N'KB0019', N'NS005', N'BN0019', N'PK301', N'2026-10-10 08:10:00', N'Sốt nhẹ', 100000),
-(N'KB0020', N'NS006', N'BN0020', N'PK401', N'2026-10-10 13:30:00', N'Viêm đường hô hấp', 200000),
-(N'KB0021', N'NS002', N'BN0010', N'PK101', N'2026-10-11 08:20:00', N'Khám sức khỏe định kỳ', 120000),
-(N'KB0022', N'NS001', N'BN0008', N'PK102', N'2026-10-11 09:15:00', N'Tái khám tim mạch', 150000),
-(N'KB0023', N'NS005', N'BN0005', N'PK301', N'2026-10-12 08:30:00', N'Tái khám nhi', 100000),
-(N'KB0024', N'NS007', N'BN0007', N'PK302', N'2026-10-12 10:00:00', N'Tái khám dị ứng', 100000),
-(N'KB0025', N'NS003', N'BN0017', N'PK201', N'2026-10-13 08:15:00', N'Tái khám ngoại khoa', 150000),
-(N'KB0026', N'NS004', N'BN0018', N'PK202', N'2026-10-13 09:40:00', N'Kiểm tra khớp', 180000),
-(N'KB0027', N'NS006', N'BN0020', N'PK402', N'2026-10-14 14:20:00', N'Theo dõi hô hấp', 200000),
-(N'KB0028', N'NS002', N'BN0016', N'PK101', N'2026-10-14 15:10:00', N'Tư vấn sức khỏe', 120000),
-(N'KB0029', N'NS005', N'BN0019', N'PK301', N'2026-10-15 08:30:00', N'Tái khám nhi', 100000),
-(N'KB0030', N'NS001', N'BN0015', N'PK102', N'2026-10-15 09:50:00', N'Kiểm tra huyết áp', 150000);
-
-
--- ============================================
--- 08. DU LIEU BANG DON_THUOC
--- ============================================
-
-INSERT INTO dbo.DON_THUOC
-(MaDT, MaKham, NgayKeDon, GhiChu)
-VALUES
-(N'DT0001', N'KB0001', N'2026-10-01', N'Theo dõi huyết áp'),
-(N'DT0002', N'KB0002', N'2026-10-01', N'Uống đủ nước'),
-(N'DT0003', N'KB0003', N'2026-10-02', N'Theo dõi vùng da tổn thương'),
-(N'DT0004', N'KB0004', N'2026-10-02', N'Hạn chế vận động mạnh'),
-(N'DT0005', N'KB0005', N'2026-10-03', N'Nghỉ ngơi và theo dõi nhiệt độ'),
-(N'DT0006', N'KB0006', N'2026-10-03', N'Theo dõi tình trạng mất nước'),
-(N'DT0007', N'KB0007', N'2026-10-04', N'Tránh tác nhân gây dị ứng'),
-(N'DT0008', N'KB0008', N'2026-10-04', N'Đo huyết áp định kỳ'),
-(N'DT0009', N'KB0009', N'2026-10-05', N'Ăn uống điều độ'),
-(N'DT0010', N'KB0010', N'2026-10-05', N'Giữ vệ sinh vùng da'),
-(N'DT0011', N'KB0011', N'2026-10-06', N'Nghỉ ngơi và vận động phù hợp'),
-(N'DT0012', N'KB0012', N'2026-10-06', N'Bổ sung dinh dưỡng hợp lý'),
-(N'DT0013', N'KB0013', N'2026-10-07', N'Theo dõi triệu chứng hô hấp'),
-(N'DT0014', N'KB0014', N'2026-10-07', N'Theo dõi tình trạng ho'),
-(N'DT0015', N'KB0015', N'2026-10-08', N'Tái khám tim mạch'),
-(N'DT0016', N'KB0016', N'2026-10-08', N'Ăn uống hợp vệ sinh'),
-(N'DT0017', N'KB0017', N'2026-10-09', N'Giữ vùng da sạch và khô'),
-(N'DT0018', N'KB0018', N'2026-10-09', N'Hạn chế mang vác nặng'),
-(N'DT0019', N'KB0019', N'2026-10-10', N'Theo dõi nhiệt độ'),
-(N'DT0020', N'KB0020', N'2026-10-10', N'Theo dõi tình trạng hô hấp');
-
-
--- ============================================
--- 09. DU LIEU BANG THUOC
--- ============================================
-
-INSERT INTO dbo.THUOC
-(MaThuoc, TenThuoc, DonViTinh, GiaNiemYet, SoLuongTon)
-VALUES
-(N'TH001', N'Paracetamol 500mg', N'Viên', 1500, 500),
-(N'TH002', N'Amoxicillin 500mg', N'Viên', 3500, 300),
-(N'TH003', N'Omeprazole 20mg', N'Viên', 2500, 250),
-(N'TH004', N'Cetirizine 10mg', N'Viên', 1800, 350),
-(N'TH005', N'Ibuprofen 400mg', N'Viên', 2200, 300),
-(N'TH006', N'Vitamin C 500mg', N'Viên', 1200, 800),
-(N'TH007', N'Oresol', N'Gói', 5000, 180),
-(N'TH008', N'Azithromycin 250mg', N'Viên', 9500, 160),
-(N'TH009', N'Loratadine 10mg', N'Viên', 2800, 200),
-(N'TH010', N'Acetylcysteine 200mg', N'Gói', 4000, 210),
-(N'TH011', N'Salbutamol 2mg', N'Viên', 2100, 200),
-(N'TH012', N'Metformin 500mg', N'Viên', 1800, 400),
-(N'TH013', N'Amlodipine 5mg', N'Viên', 2200, 350),
-(N'TH014', N'Losartan 50mg', N'Viên', 3500, 300),
-(N'TH015', N'Diclofenac 50mg', N'Viên', 2000, 260),
-(N'TH016', N'Dextromethorphan 15mg', N'Viên', 2700, 300),
-(N'TH017', N'Zinc 20mg', N'Viên', 1400, 220),
-(N'TH018', N'Calcium D3', N'Viên', 4000, 330),
-(N'TH019', N'Mupirocin 2%', N'Tuýp', 35000, 85),
-(N'TH020', N'Clotrimazole 1%', N'Tuýp', 28000, 120);
-
-
--- ============================================
--- 10. DU LIEU BANG CHI_TIET_DON_THUOC
--- ============================================
-
-INSERT INTO dbo.CHI_TIET_DON_THUOC
-(MaDT, MaThuoc, SoLuong, CachDung, DonGiaBan)
-VALUES
-(N'DT0001', N'TH013', 14, N'Theo chỉ định bác sĩ', 2200),
-(N'DT0001', N'TH014', 14, N'Theo chỉ định bác sĩ', 3500),
-
-(N'DT0002', N'TH001', 10, N'Theo chỉ định bác sĩ', 1500),
-(N'DT0002', N'TH010', 10, N'Theo chỉ định bác sĩ', 4000),
-
-(N'DT0003', N'TH002', 10, N'Theo chỉ định bác sĩ', 3500),
-(N'DT0003', N'TH019', 1, N'Dùng ngoài da theo chỉ định', 35000),
-
-(N'DT0004', N'TH005', 10, N'Theo chỉ định bác sĩ', 2200),
-(N'DT0004', N'TH018', 20, N'Theo chỉ định bác sĩ', 4000),
-
-(N'DT0005', N'TH001', 10, N'Theo chỉ định bác sĩ', 1500),
-(N'DT0005', N'TH006', 10, N'Theo chỉ định bác sĩ', 1200),
-
-(N'DT0006', N'TH007', 5, N'Theo chỉ định bác sĩ', 5000),
-(N'DT0006', N'TH017', 10, N'Theo chỉ định bác sĩ', 1400),
-
-(N'DT0007', N'TH004', 10, N'Theo chỉ định bác sĩ', 1800),
-(N'DT0007', N'TH006', 10, N'Theo chỉ định bác sĩ', 1200),
-
-(N'DT0008', N'TH013', 14, N'Theo chỉ định bác sĩ', 2200),
-(N'DT0008', N'TH014', 14, N'Theo chỉ định bác sĩ', 3500),
-
-(N'DT0009', N'TH003', 14, N'Theo chỉ định bác sĩ', 2500),
-(N'DT0009', N'TH006', 10, N'Theo chỉ định bác sĩ', 1200),
-
-(N'DT0010', N'TH019', 1, N'Dùng ngoài da theo chỉ định', 35000),
-(N'DT0010', N'TH006', 10, N'Theo chỉ định bác sĩ', 1200),
-
-(N'DT0011', N'TH015', 10, N'Theo chỉ định bác sĩ', 2000),
-(N'DT0011', N'TH018', 20, N'Theo chỉ định bác sĩ', 4000),
-
-(N'DT0012', N'TH017', 10, N'Theo chỉ định bác sĩ', 1400),
-(N'DT0012', N'TH006', 10, N'Theo chỉ định bác sĩ', 1200),
-
-(N'DT0013', N'TH011', 10, N'Theo chỉ định bác sĩ', 2100),
-(N'DT0013', N'TH010', 10, N'Theo chỉ định bác sĩ', 4000),
-
-(N'DT0014', N'TH016', 10, N'Theo chỉ định bác sĩ', 2700),
-(N'DT0014', N'TH006', 10, N'Theo chỉ định bác sĩ', 1200),
-
-(N'DT0015', N'TH013', 14, N'Theo chỉ định bác sĩ', 2200),
-(N'DT0015', N'TH014', 14, N'Theo chỉ định bác sĩ', 3500),
-
-(N'DT0016', N'TH007', 5, N'Theo chỉ định bác sĩ', 5000),
-(N'DT0016', N'TH017', 10, N'Theo chỉ định bác sĩ', 1400),
-
-(N'DT0017', N'TH020', 1, N'Dùng ngoài da theo chỉ định', 28000),
-(N'DT0017', N'TH006', 10, N'Theo chỉ định bác sĩ', 1200),
-
-(N'DT0018', N'TH005', 10, N'Theo chỉ định bác sĩ', 2200),
-(N'DT0018', N'TH018', 20, N'Theo chỉ định bác sĩ', 4000),
-
-(N'DT0019', N'TH001', 10, N'Theo chỉ định bác sĩ', 1500),
-(N'DT0019', N'TH006', 10, N'Theo chỉ định bác sĩ', 1200),
-
-(N'DT0020', N'TH010', 10, N'Theo chỉ định bác sĩ', 4000),
-(N'DT0020', N'TH016', 10, N'Theo chỉ định bác sĩ', 2700);
+INSERT INTO CHI_TIET_DON_THUOC (MaDonThuoc, MaThuoc, SoLuong, CachDung) VALUES
+('DT01', 'T01', 20, N'Ngày uống 2 lần, mỗi lần 1 viên sau ăn'),
+('DT01', 'T05', 10, N'Ngày uống 1 viên sủi pha loãng'),
+('DT02', 'T04', 30, N'Uống trước ăn sáng 30 phút'),
+('DT02', 'T14', 60, N'Uống trong bữa ăn'),
+('DT03', 'T02', 20, N'Uống theo chỉ định sau phẫu thuật'),
+('DT04', 'T03', 15, N'Uống khi đau, cách nhau ít nhất 6 tiếng'),
+('DT05', 'T01', 10, N'Uống khi sốt trên 38.5 độ'),
+('DT05', 'T10', 1, N'Uống ngày 3 lần, mỗi lần 10ml'),
+('DT06', 'T05', 30, N'Bổ sung vitamin hàng ngày'),
+('DT07', 'T06', 30, N'Uống 1 viên sau ăn sáng'),
+('DT08', 'T11', 2, N'Dùng để nhỏ mắt hàng ngày'),
+('DT09', 'T02', 14, N'Uống sáng 1 viên, chiều 1 viên'),
+('DT10', 'T05', 30, N'Uống tăng cường sức đề kháng'),
+('DT11', 'T03', 20, N'Uống sau ăn no để giảm đau lưng'),
+('DT12', 'T01', 15, N'Uống khi sốt, kết hợp bù điện giải Oresol'),
+('DT13', 'T03', 10, N'Uống khi đau cơ, xương khớp'),
+('DT14', 'T02', 10, N'Uống kháng sinh chống bội nhiễm'),
+('DT15', 'T08', 20, N'Uống buổi tối trước khi đi ngủ');
+GO
