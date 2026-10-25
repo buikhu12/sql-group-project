@@ -1,203 +1,132 @@
-﻿-- ============================================
--- BTL CO SO DU LIEU - HE THONG QUAN LY BENH VIEN
--- PHIEN BAN MICROSOFT SQL SERVER (T-SQL)
--- ============================================
-
--- Script tong hop: tao database va 10 bang theo thu tu khoa ngoai.
-IF DB_ID(N'QuanLyBenhVien') IS NULL
-BEGIN
-    EXEC(N'CREATE DATABASE [QuanLyBenhVien];');
-END;
+-- Tạo cơ sở dữ liệu mới
+CREATE DATABASE QuanLyBenhVien;
 GO
 
-USE [QuanLyBenhVien];
+USE QuanLyBenhVien;
 GO
 
--- 01. Bang KHOA
-IF OBJECT_ID(N'dbo.KHOA', N'U') IS NULL
-BEGIN
-    CREATE TABLE dbo.KHOA (
-        MaKhoa NVARCHAR(10) NOT NULL,
-        TenKhoa NVARCHAR(100) NOT NULL,
-        ViTriTang NVARCHAR(50) NULL,
-
-        CONSTRAINT PK_KHOA PRIMARY KEY (MaKhoa)
-    );
-END;
+-- 1. Bảng Bệnh Viện (Thực thể độc lập cấp cao nhất)
+CREATE TABLE BENH_VIEN (
+    MaBV VARCHAR(10) PRIMARY KEY,
+    TenBV NVARCHAR(100) NOT NULL,
+    DiaChi NVARCHAR(255)
+);
 GO
 
--- 02. Bang NHAN_SU
-IF OBJECT_ID(N'dbo.NHAN_SU', N'U') IS NULL
-BEGIN
-    CREATE TABLE dbo.NHAN_SU (
-        MaNS NVARCHAR(10) NOT NULL,
-        HoTen NVARCHAR(100) NOT NULL,
-        SoDienThoai NVARCHAR(15) NULL,
-        LuongCoBan DECIMAL(12,2) NOT NULL,
-        MaKhoa NVARCHAR(10) NOT NULL,
-
-        CONSTRAINT PK_NHAN_SU PRIMARY KEY (MaNS),
-        CONSTRAINT FK_NHAN_SU_KHOA FOREIGN KEY (MaKhoa)
-            REFERENCES dbo.KHOA(MaKhoa),
-        CONSTRAINT CK_NHAN_SU_LUONG CHECK (LuongCoBan > 0)
-    );
-END;
+-- 2. Bảng Khoa (Thuộc Bệnh Viện)
+CREATE TABLE KHOA (
+    MaKhoa VARCHAR(10) PRIMARY KEY,
+    TenKhoa NVARCHAR(100) NOT NULL,
+    MaBV VARCHAR(10),
+    FOREIGN KEY (MaBV) REFERENCES BENH_VIEN(MaBV)
+);
 GO
 
--- 03. Bang BAC_SI
-IF OBJECT_ID(N'dbo.BAC_SI', N'U') IS NULL
-BEGIN
-    CREATE TABLE dbo.BAC_SI (
-        MaNS NVARCHAR(10) NOT NULL,
-        ChuyenKhoa NVARCHAR(100) NOT NULL,
-        SoChungChiHanhNghe NVARCHAR(30) NULL,
-
-        CONSTRAINT PK_BAC_SI PRIMARY KEY (MaNS),
-        CONSTRAINT FK_BAC_SI_NHAN_SU FOREIGN KEY (MaNS)
-            REFERENCES dbo.NHAN_SU(MaNS)
-    );
-END;
+-- 3. Bảng Phòng Khám (Thuộc Khoa)
+CREATE TABLE PHONG_KHAM (
+    MaPK VARCHAR(10) PRIMARY KEY,
+    TenPK NVARCHAR(100) NOT NULL,
+    MaKhoa VARCHAR(10),
+    FOREIGN KEY (MaKhoa) REFERENCES KHOA(MaKhoa)
+);
 GO
 
--- Dung unique filtered index de cho phep nhieu NULL, nhung khong cho trung so chung chi.
-IF NOT EXISTS (
-    SELECT 1
-    FROM sys.indexes
-    WHERE object_id = OBJECT_ID(N'dbo.BAC_SI')
-      AND name = N'UQ_BAC_SI_CHUNG_CHI'
-)
-BEGIN
-    CREATE UNIQUE INDEX UQ_BAC_SI_CHUNG_CHI
-        ON dbo.BAC_SI(SoChungChiHanhNghe)
-        WHERE SoChungChiHanhNghe IS NOT NULL;
-END;
+-- 4. Bảng Bệnh Nhân
+CREATE TABLE BENH_NHAN (
+    MaBN VARCHAR(10) PRIMARY KEY,
+    HoTen NVARCHAR(100) NOT NULL,
+    NgaySinh DATE,
+    GioiTinh NVARCHAR(10),
+    DiaChi NVARCHAR(255),
+    SoDienThoai VARCHAR(15)
+);
 GO
 
--- 04. Bang Y_TA
-IF OBJECT_ID(N'dbo.Y_TA', N'U') IS NULL
-BEGIN
-    CREATE TABLE dbo.Y_TA (
-        MaNS NVARCHAR(10) NOT NULL,
-        CaTruc NVARCHAR(30) NOT NULL,
-        KhuVucPhuTrach NVARCHAR(100) NULL,
-
-        CONSTRAINT PK_Y_TA PRIMARY KEY (MaNS),
-        CONSTRAINT FK_Y_TA_NHAN_SU FOREIGN KEY (MaNS)
-            REFERENCES dbo.NHAN_SU(MaNS)
-    );
-END;
+-- 5. Bảng Thuốc
+CREATE TABLE THUOC (
+    MaThuoc VARCHAR(10) PRIMARY KEY,
+    TenThuoc NVARCHAR(100) NOT NULL,
+    DonGia DECIMAL(18, 2),
+    DonViTinh NVARCHAR(20)
+);
 GO
 
--- 05. Bang PHONG_KHAM
-IF OBJECT_ID(N'dbo.PHONG_KHAM', N'U') IS NULL
-BEGIN
-    CREATE TABLE dbo.PHONG_KHAM (
-        MaPhong NVARCHAR(10) NOT NULL,
-        TenPhong NVARCHAR(100) NOT NULL,
-        LoaiPhong NVARCHAR(50) NULL,
-        MaKhoa NVARCHAR(10) NULL,
-
-        CONSTRAINT PK_PHONG_KHAM PRIMARY KEY (MaPhong),
-        CONSTRAINT FK_PHONG_KHAM_KHOA FOREIGN KEY (MaKhoa)
-            REFERENCES dbo.KHOA(MaKhoa)
-    );
-END;
+-- 6. Bảng Xét Nghiệm
+CREATE TABLE XET_NGHIEM (
+    MaXN VARCHAR(10) PRIMARY KEY,
+    TenXN NVARCHAR(100) NOT NULL,
+    ChiPhi DECIMAL(18, 2)
+);
 GO
 
--- 06. Bang BENH_NHAN
-IF OBJECT_ID(N'dbo.BENH_NHAN', N'U') IS NULL
-BEGIN
-    CREATE TABLE dbo.BENH_NHAN (
-        MaBN NVARCHAR(10) NOT NULL,
-        HoTen NVARCHAR(100) NOT NULL,
-        NgaySinh DATE NOT NULL,
-        GioiTinh NVARCHAR(5) NULL,
-        SoBHYT NVARCHAR(20) NULL,
-        SoDienThoai NVARCHAR(15) NULL,
-
-        CONSTRAINT PK_BENH_NHAN PRIMARY KEY (MaBN),
-        CONSTRAINT CK_BENH_NHAN_GIOI_TINH CHECK (GioiTinh IN (N'Nam', N'Nữ'))
-    );
-END;
+-- 7. Bảng Bác Sĩ (Thuộc Khoa)
+CREATE TABLE BAC_SI (
+    MaBS VARCHAR(10) PRIMARY KEY,
+    HoTen NVARCHAR(100) NOT NULL,
+    ChuyenKhoa NVARCHAR(100),
+    SoDienThoai VARCHAR(15),
+    MaKhoa VARCHAR(10),
+    FOREIGN KEY (MaKhoa) REFERENCES KHOA(MaKhoa)
+);
 GO
 
--- 07. Bang KHAM_BENH
-IF OBJECT_ID(N'dbo.KHAM_BENH', N'U') IS NULL
-BEGIN
-    CREATE TABLE dbo.KHAM_BENH (
-        MaKham NVARCHAR(10) NOT NULL,
-        MaBS NVARCHAR(10) NOT NULL,
-        MaBN NVARCHAR(10) NOT NULL,
-        MaPhong NVARCHAR(10) NOT NULL,
-        NgayKham DATETIME NOT NULL,
-        ChanDoan NVARCHAR(255) NULL,
-        TienKham DECIMAL(10,2) NULL,
-
-        CONSTRAINT PK_KHAM_BENH PRIMARY KEY (MaKham),
-        CONSTRAINT FK_KHAM_BENH_BAC_SI FOREIGN KEY (MaBS)
-            REFERENCES dbo.BAC_SI(MaNS),
-        CONSTRAINT FK_KHAM_BENH_BENH_NHAN FOREIGN KEY (MaBN)
-            REFERENCES dbo.BENH_NHAN(MaBN),
-        CONSTRAINT FK_KHAM_BENH_PHONG_KHAM FOREIGN KEY (MaPhong)
-            REFERENCES dbo.PHONG_KHAM(MaPhong),
-        CONSTRAINT CK_KHAM_BENH_TIEN CHECK (TienKham > 0)
-    );
-END;
+-- 8. Bảng Y Tá
+CREATE TABLE Y_TA (
+    MaYT VARCHAR(10) PRIMARY KEY,
+    HoTen NVARCHAR(100) NOT NULL,
+    SoDienThoai VARCHAR(15)
+);
 GO
 
--- 08. Bang DON_THUOC
-IF OBJECT_ID(N'dbo.DON_THUOC', N'U') IS NULL
-BEGIN
-    CREATE TABLE dbo.DON_THUOC (
-        MaDT NVARCHAR(10) NOT NULL,
-        MaKham NVARCHAR(10) NOT NULL,
-        NgayKeDon DATE NOT NULL,
-        GhiChu NVARCHAR(255) NULL,
-
-        CONSTRAINT PK_DON_THUOC PRIMARY KEY (MaDT),
-        CONSTRAINT FK_DON_THUOC_KHAM_BENH FOREIGN KEY (MaKham)
-            REFERENCES dbo.KHAM_BENH(MaKham),
-        CONSTRAINT UQ_DON_THUOC_MAKHAM UNIQUE (MaKham)
-    );
-END;
+-- 9. Bảng Giường Bệnh (Quản lý bệnh nhân nằm viện)
+CREATE TABLE GIUONG_BENH (
+    MaGiuong VARCHAR(10) PRIMARY KEY,
+    TrangThai NVARCHAR(50), -- Trống, Đang sử dụng,...
+    MaBN VARCHAR(10) NULL,
+    FOREIGN KEY (MaBN) REFERENCES BENH_NHAN(MaBN)
+);
 GO
 
--- 09. Bang THUOC
-IF OBJECT_ID(N'dbo.THUOC', N'U') IS NULL
-BEGIN
-    CREATE TABLE dbo.THUOC (
-        MaThuoc NVARCHAR(10) NOT NULL,
-        TenThuoc NVARCHAR(150) NOT NULL,
-        DonViTinh NVARCHAR(30) NOT NULL,
-        GiaNiemYet DECIMAL(10,2) NULL,
-        SoLuongTon INT NULL CONSTRAINT DF_THUOC_SoLuongTon DEFAULT (0),
-
-        CONSTRAINT PK_THUOC PRIMARY KEY (MaThuoc),
-        CONSTRAINT CK_THUOC_GIA CHECK (GiaNiemYet > 0),
-        CONSTRAINT CK_THUOC_SO_LUONG CHECK (SoLuongTon >= 0)
-    );
-END;
+-- 10. Bảng Lịch Làm Việc
+CREATE TABLE LICH_LAM_VIEC (
+    MaLich VARCHAR(10) PRIMARY KEY,
+    NgayLamViec DATE,
+    CaLamViec NVARCHAR(50),
+    MaBS VARCHAR(10),
+    FOREIGN KEY (MaBS) REFERENCES BAC_SI(MaBS)
+);
 GO
 
--- 10. Bang CHI_TIET_DON_THUOC
-IF OBJECT_ID(N'dbo.CHI_TIET_DON_THUOC', N'U') IS NULL
-BEGIN
-    CREATE TABLE dbo.CHI_TIET_DON_THUOC (
-        MaDT NVARCHAR(10) NOT NULL,
-        MaThuoc NVARCHAR(10) NOT NULL,
-        SoLuong INT NOT NULL,
-        CachDung NVARCHAR(200) NULL,
-        DonGiaBan DECIMAL(10,2) NULL,
-
-        CONSTRAINT PK_CHI_TIET_DON_THUOC PRIMARY KEY (MaDT, MaThuoc),
-        CONSTRAINT FK_CTDT_DON_THUOC FOREIGN KEY (MaDT)
-            REFERENCES dbo.DON_THUOC(MaDT),
-        CONSTRAINT FK_CTDT_THUOC FOREIGN KEY (MaThuoc)
-            REFERENCES dbo.THUOC(MaThuoc),
-        CONSTRAINT CK_CTDT_SO_LUONG CHECK (SoLuong > 0)
-    );
-END;
+-- 11. Bảng Khám Bệnh / Lần Khám Bệnh
+CREATE TABLE KHAM_BENH (
+    MaLanKham VARCHAR(10) PRIMARY KEY,
+    MaBN VARCHAR(10) NOT NULL,
+    MaBS VARCHAR(10) NOT NULL,
+    NgayKham DATETIME DEFAULT GETDATE(),
+    TrieuChung NVARCHAR(255),
+    ChanDoan NVARCHAR(255),
+    FOREIGN KEY (MaBN) REFERENCES BENH_NHAN(MaBN),
+    FOREIGN KEY (MaBS) REFERENCES BAC_SI(MaBS)
+);
 GO
 
-PRINT N'Schema QuanLyBenhVien da duoc tao/kiem tra.';
+-- 12. Bảng Đơn Thuốc
+CREATE TABLE DON_THUOC (
+    MaDonThuoc VARCHAR(10) PRIMARY KEY,
+    MaLanKham VARCHAR(10),
+    NgayLap DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (MaLanKham) REFERENCES KHAM_BENH(MaLanKham)
+);
+GO
+
+-- 13. Bảng Chi Tiết Đơn Thuốc (Quan hệ N-N giữa Đơn Thuốc và Thuốc)
+CREATE TABLE CHI_TIET_DON_THUOC (
+    MaDonThuoc VARCHAR(10),
+    MaThuoc VARCHAR(10),
+    SoLuong INT NOT NULL,
+    CachDung NVARCHAR(255),
+    PRIMARY KEY (MaDonThuoc, MaThuoc),
+    FOREIGN KEY (MaDonThuoc) REFERENCES DON_THUOC(MaDonThuoc),
+    FOREIGN KEY (MaThuoc) REFERENCES THUOC(MaThuoc)
+);
 GO
