@@ -1,9 +1,5 @@
 -- ============================================================
--- DU LIEU MAU QUAN LY BENH VIEN - SQL SERVER
--- Ban moi: moi dong INSERT chi them mot ban ghi de tranh loi dau phay
--- Moi bang co 10-20 ban ghi, cac khoa ngoai da duoc doi chieu
--- Can chay sau khi da tao cac bang theo script DDL tuong ung.
--- File nay xoa du lieu mau cu truoc khi chen lai.
+-- DỮ LIỆU MẪU QUẢN LÝ BỆNH VIỆN - SQL SERVER
 -- ============================================================
 
 USE QuanLyBenhVien;
@@ -13,7 +9,7 @@ SET XACT_ABORT ON;
 BEGIN TRY
     BEGIN TRANSACTION;
 
-    -- Xoa du lieu theo thu tu tu bang con den bang cha
+    -- Xóa dữ liệu theo thứ tự từ bảng con đến bảng cha
     DELETE FROM ThucHienXetNghiem;
     DELETE FROM LanHenXetNghiem;
     DELETE FROM ChiTietDonThuoc;
@@ -33,7 +29,7 @@ BEGIN TRY
     DELETE FROM Khoa;
     DELETE FROM BenhVien;
 
--- 1. BenhVien: 10 ban ghi
+-- 1. BenhVien - Bệnh viện: 10 bản ghi
 INSERT INTO BenhVien (MaBV, TenBV, DiaChi) VALUES ('BV01', N'Bệnh viện Trung ương', N'Hà Nội');
 INSERT INTO BenhVien (MaBV, TenBV, DiaChi) VALUES ('BV02', N'Bệnh viện Thành phố', N'Hồ Chí Minh');
 INSERT INTO BenhVien (MaBV, TenBV, DiaChi) VALUES ('BV03', N'Bệnh viện Đa khoa Đông Đô', N'Hà Nội');
@@ -45,7 +41,7 @@ INSERT INTO BenhVien (MaBV, TenBV, DiaChi) VALUES ('BV08', N'Bệnh viện Hòa 
 INSERT INTO BenhVien (MaBV, TenBV, DiaChi) VALUES ('BV09', N'Bệnh viện Đại Phúc', N'Huế');
 INSERT INTO BenhVien (MaBV, TenBV, DiaChi) VALUES ('BV10', N'Bệnh viện Tân An', N'Long An');
 
--- 2. Khoa: 15 ban ghi
+-- 2. Khoa - Khoa: 15 bản ghi
 INSERT INTO Khoa (MaKhoa, TenKhoa, MaBV) VALUES ('K01', N'Nội tổng hợp', 'BV01');
 INSERT INTO Khoa (MaKhoa, TenKhoa, MaBV) VALUES ('K02', N'Ngoại khoa', 'BV02');
 INSERT INTO Khoa (MaKhoa, TenKhoa, MaBV) VALUES ('K03', N'Nhi khoa', 'BV03');
@@ -62,7 +58,7 @@ INSERT INTO Khoa (MaKhoa, TenKhoa, MaBV) VALUES ('K13', N'Xét nghiệm', 'BV03'
 INSERT INTO Khoa (MaKhoa, TenKhoa, MaBV) VALUES ('K14', N'Phục hồi chức năng', 'BV04');
 INSERT INTO Khoa (MaKhoa, TenKhoa, MaBV) VALUES ('K15', N'Răng hàm mặt', 'BV05');
 
--- 3. PhongKham: 15 ban ghi
+-- 3. PhongKham - Phòng khám: 17 bản ghi
 INSERT INTO PhongKham (MaPK, TenPK, MaKhoa) VALUES ('PK01', N'Phòng khám Nội 1', 'K01');
 INSERT INTO PhongKham (MaPK, TenPK, MaKhoa) VALUES ('PK02', N'Phòng khám Ngoại 1', 'K02');
 INSERT INTO PhongKham (MaPK, TenPK, MaKhoa) VALUES ('PK03', N'Phòng khám Nhi', 'K03');
@@ -78,59 +74,104 @@ INSERT INTO PhongKham (MaPK, TenPK, MaKhoa) VALUES ('PK12', N'Phòng chẩn đo�
 INSERT INTO PhongKham (MaPK, TenPK, MaKhoa) VALUES ('PK13', N'Phòng xét nghiệm', 'K13');
 INSERT INTO PhongKham (MaPK, TenPK, MaKhoa) VALUES ('PK14', N'Phòng phục hồi chức năng', 'K14');
 INSERT INTO PhongKham (MaPK, TenPK, MaKhoa) VALUES ('PK15', N'Phòng Răng hàm mặt', 'K15');
+INSERT INTO PhongKham (MaPK, TenPK, MaKhoa) VALUES ('PK16', N'Phòng khám Nội 2', 'K01');
+INSERT INTO PhongKham (MaPK, TenPK, MaKhoa) VALUES ('PK17', N'Phòng khám Ngoại 2', 'K02');
 
--- 4. GiuongBenh: 15 ban ghi
-INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB01', N'Trống', 'K01');
-INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB02', N'Đang sử dụng', 'K02');
-INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB03', N'Đang vệ sinh', 'K03');
-INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB04', N'Trống', 'K04');
-INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB05', N'Đang sử dụng', 'K05');
-INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB06', N'Trống', 'K06');
-INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB07', N'Đang sử dụng', 'K07');
-INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB08', N'Đang vệ sinh', 'K08');
-INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB09', N'Trống', 'K09');
-INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB10', N'Đang sử dụng', 'K10');
-INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB11', N'Trống', 'K11');
-INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB12', N'Đang sử dụng', 'K12');
-INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB13', N'Đang vệ sinh', 'K13');
-INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB14', N'Trống', 'K14');
-INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB15', N'Đang sử dụng', 'K15');
+-- 4. GiuongBenh - Giường bệnh: 32 bản ghi
+INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB01', N'Đang sử dụng', 'K01');
+INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB02', N'Đang sử dụng', 'K01');
+INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB03', N'Đang sử dụng', 'K01');
+INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB04', N'Trống', 'K01');
+INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB05', N'Đang sử dụng', 'K02');
+INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB06', N'Đang sử dụng', 'K02');
+INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB07', N'Trống', 'K02');
+INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB08', N'Trống', 'K02');
+INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB09', N'Đang sử dụng', 'K03');
+INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB10', N'Trống', 'K03');
+INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB11', N'Trống', 'K03');
+INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB12', N'Đang sử dụng', 'K04');
+INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB13', N'Đang sử dụng', 'K04');
+INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB14', N'Đang sử dụng', 'K04');
+INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB15', N'Đang sử dụng', 'K05');
+INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB16', N'Trống', 'K05');
+INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB17', N'Trống', 'K06');
+INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB18', N'Trống', 'K06');
+INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB19', N'Đang sử dụng', 'K11');
+INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB20', N'Đang sử dụng', 'K11');
+INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB21', N'Trống', 'K05');
+INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB22', N'Đang sử dụng', 'K07');
+INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB23', N'Trống', 'K07');
+INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB24', N'Đang sử dụng', 'K08');
+INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB25', N'Đang sử dụng', 'K09');
+INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB26', N'Trống', 'K09');
+INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB27', N'Đang sử dụng', 'K10');
+INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB28', N'Đang sử dụng', 'K10');
+INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB29', N'Trống', 'K10');
+INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB30', N'Đang sử dụng', 'K14');
+INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB31', N'Trống', 'K14');
+INSERT INTO GiuongBenh (MaGiuong, TrangThai, MaKhoa) VALUES ('GB32', N'Trống', 'K15');
 
--- 5. NhanVienYTe: 20 ban ghi
-INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('BS01', N'Nguyễn Minh Anh', '1981-02-02', '0901374921', 'K01');
-INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('BS02', N'Trần Quốc Bảo', '1982-03-03', '0902749842', 'K02');
-INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('BS03', N'Lê Thu Hà', '1983-04-04', '0904124763', 'K03');
-INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('BS04', N'Phạm Gia Huy', '1984-05-05', '0905499684', 'K04');
-INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('BS05', N'Hoàng Ngọc Lan', '1985-06-06', '0906874605', 'K05');
-INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('BS06', N'Vũ Đức Long', '1986-07-07', '0908249526', 'K06');
-INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('BS07', N'Đặng Phương Mai', '1987-08-08', '0909624447', 'K07');
-INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('BS08', N'Bùi Tuấn Nam', '1988-09-09', '0910999368', 'K08');
-INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('BS09', N'Đỗ Khánh Ngân', '1989-10-10', '0912374289', 'K09');
-INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('BS10', N'Ngô Hoàng Phúc', '1990-11-11', '0913749210', 'K10');
-INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('YT01', N'Dương Thanh Sơn', '1991-12-12', '0915124131', 'K11');
-INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('YT02', N'Lý Mỹ Tâm', '1992-01-13', '0916499052', 'K12');
-INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('YT03', N'Mai Quang Vinh', '1993-02-14', '0917873973', 'K13');
-INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('YT04', N'Đinh Bảo Yến', '1994-03-15', '0919248894', 'K14');
-INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('YT05', N'Phan Trọng Kiên', '1980-04-16', '0920623815', 'K15');
-INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('YT06', N'Hồ Hải Đăng', '1981-05-17', '0921998736', 'K01');
-INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('YT07', N'Võ Kim Chi', '1982-06-18', '0923373657', 'K02');
-INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('YT08', N'Tạ Anh Dũng', '1983-07-19', '0924748578', 'K03');
-INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('YT09', N'Cao Thùy Linh', '1984-08-20', '0926123499', 'K04');
-INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('YT10', N'Lâm Nhật Minh', '1985-09-21', '0927498420', 'K05');
+-- 5. NhanVienYTe - Nhân viên y tế (bác sĩ và y tá): 36 bản ghi
+INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('BS01', N'Nguyễn Minh Anh', '1978-02-02', '0901374921', 'K01');
+INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('BS02', N'Trần Quốc Bảo', '1982-03-03', '0902749842', 'K01');
+INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('BS03', N'Lê Thu Hà', '1975-04-04', '0904124763', 'K02');
+INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('BS04', N'Phạm Gia Huy', '1984-05-05', '0905499684', 'K02');
+INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('BS05', N'Hoàng Ngọc Lan', '1980-06-06', '0906874605', 'K03');
+INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('BS06', N'Vũ Đức Long', '1986-07-07', '0908249526', 'K03');
+INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('BS07', N'Đặng Phương Mai', '1972-08-08', '0909624447', 'K04');
+INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('BS08', N'Bùi Tuấn Nam', '1979-09-09', '0910999368', 'K04');
+INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('BS09', N'Đỗ Khánh Ngân', '1981-10-10', '0912374289', 'K05');
+INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('BS10', N'Ngô Hoàng Phúc', '1976-11-11', '0913749210', 'K07');
+INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('YT01', N'Dương Thanh Sơn', '1991-12-12', '0915124131', 'K01');
+INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('YT02', N'Lý Mỹ Tâm', '1992-01-13', '0916499052', 'K01');
+INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('YT03', N'Mai Quang Vinh', '1993-02-14', '0917873973', 'K02');
+INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('YT04', N'Đinh Bảo Yến', '1994-03-15', '0919248894', 'K03');
+INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('YT05', N'Phan Trọng Kiên', '1990-04-16', '0920623815', 'K04');
+INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('YT06', N'Hồ Hải Đăng', '1991-05-17', '0921998736', 'K05');
+INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('YT07', N'Võ Kim Chi', '1992-06-18', '0923373657', 'K06');
+INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('YT08', N'Tạ Anh Dũng', '1993-07-19', '0924748578', 'K07');
+INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('YT09', N'Cao Thùy Linh', '1994-08-20', '0926123499', 'K11');
+INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('YT10', N'Lâm Nhật Minh', '1995-09-21', '0927498420', 'K11');
+INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('BS11', N'Trịnh Quốc Thái', '1983-12-12', '0928873341', 'K05');
+INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('BS12', N'Nguyễn Thị Hải Yến', '1985-01-13', '0929248262', 'K06');
+INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('BS13', N'Hà Đình Khoa', '1977-02-14', '0930623183', 'K07');
+INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('BS14', N'Đoàn Mỹ Linh', '1987-03-15', '0931998104', 'K08');
+INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('YT11', N'Kim Ngọc Ánh', '1996-04-16', '0932373025', 'K02');
+INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('YT12', N'Bạch Văn Hiếu', '1997-05-17', '0933747946', 'K04');
+INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('BS15', N'Tống Thị Bích Ngọc', '1980-06-19', '0934122867', 'K09');
+INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('BS16', N'Lâm Văn Trung', '1986-07-20', '0935497788', 'K09');
+INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('BS17', N'Phùng Đức Hải', '1974-08-21', '0936872709', 'K10');
+INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('BS18', N'Quách Thị Diệu Linh', '1982-09-22', '0938247620', 'K11');
+INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('BS19', N'Lại Minh Quân', '1988-10-23', '0939622541', 'K15');
+INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('BS20', N'Thái Hồng Sơn', '1979-11-24', '0940997462', 'K12');
+INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('YT13', N'Văn Thị Kim Oanh', '1995-12-25', '0941372383', 'K09');
+INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('YT14', N'Trần Đình Nam', '1993-01-26', '0942747304', 'K10');
+INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('YT15', N'Huỳnh Ngọc Trinh', '1996-02-27', '0944122225', 'K13');
+INSERT INTO NhanVienYTe (MaNV, HoTen, NgaySinh, SDT, MaKhoa) VALUES ('YT16', N'Mạc Quốc Anh', '1994-03-28', '0945497146', 'K14');
 
--- 6. BacSi: 10 ban ghi
-INSERT INTO BacSi (MaNV, BangCap, ChuyenKhoa) VALUES ('BS01', N'Bác sĩ đa khoa', N'Nội khoa');
-INSERT INTO BacSi (MaNV, BangCap, ChuyenKhoa) VALUES ('BS02', N'Thạc sĩ y học', N'Ngoại khoa');
-INSERT INTO BacSi (MaNV, BangCap, ChuyenKhoa) VALUES ('BS03', N'Tiến sĩ y khoa', N'Nhi khoa');
-INSERT INTO BacSi (MaNV, BangCap, ChuyenKhoa) VALUES ('BS04', N'Bác sĩ chuyên khoa I', N'Tim mạch');
-INSERT INTO BacSi (MaNV, BangCap, ChuyenKhoa) VALUES ('BS05', N'Bác sĩ chuyên khoa II', N'Thần kinh');
-INSERT INTO BacSi (MaNV, BangCap, ChuyenKhoa) VALUES ('BS06', N'Bác sĩ đa khoa', N'Sản phụ khoa');
-INSERT INTO BacSi (MaNV, BangCap, ChuyenKhoa) VALUES ('BS07', N'Thạc sĩ y học', N'Tai mũi họng');
-INSERT INTO BacSi (MaNV, BangCap, ChuyenKhoa) VALUES ('BS08', N'Tiến sĩ y khoa', N'Mắt');
-INSERT INTO BacSi (MaNV, BangCap, ChuyenKhoa) VALUES ('BS09', N'Bác sĩ chuyên khoa I', N'Da liễu');
-INSERT INTO BacSi (MaNV, BangCap, ChuyenKhoa) VALUES ('BS10', N'Bác sĩ chuyên khoa II', N'Cấp cứu');
+-- 6. BacSi - Bác sĩ: 20 bản ghi
+INSERT INTO BacSi (MaNV, BangCap, ChuyenKhoa) VALUES ('BS01', N'Bác sĩ chuyên khoa I', N'Nội khoa');
+INSERT INTO BacSi (MaNV, BangCap, ChuyenKhoa) VALUES ('BS02', N'Thạc sĩ y học', N'Nội khoa');
+INSERT INTO BacSi (MaNV, BangCap, ChuyenKhoa) VALUES ('BS03', N'Bác sĩ chuyên khoa II', N'Ngoại khoa');
+INSERT INTO BacSi (MaNV, BangCap, ChuyenKhoa) VALUES ('BS04', N'Bác sĩ chuyên khoa I', N'Ngoại khoa');
+INSERT INTO BacSi (MaNV, BangCap, ChuyenKhoa) VALUES ('BS05', N'Tiến sĩ y khoa', N'Nhi khoa');
+INSERT INTO BacSi (MaNV, BangCap, ChuyenKhoa) VALUES ('BS06', N'Bác sĩ đa khoa', N'Nhi khoa');
+INSERT INTO BacSi (MaNV, BangCap, ChuyenKhoa) VALUES ('BS07', N'Bác sĩ chuyên khoa II', N'Tim mạch');
+INSERT INTO BacSi (MaNV, BangCap, ChuyenKhoa) VALUES ('BS08', N'Thạc sĩ y học', N'Tim mạch');
+INSERT INTO BacSi (MaNV, BangCap, ChuyenKhoa) VALUES ('BS09', N'Bác sĩ chuyên khoa I', N'Thần kinh');
+INSERT INTO BacSi (MaNV, BangCap, ChuyenKhoa) VALUES ('BS10', N'Bác sĩ đa khoa', N'Tai mũi họng');
+INSERT INTO BacSi (MaNV, BangCap, ChuyenKhoa) VALUES ('BS11', N'Thạc sĩ y học', N'Thần kinh');
+INSERT INTO BacSi (MaNV, BangCap, ChuyenKhoa) VALUES ('BS12', N'Bác sĩ chuyên khoa I', N'Sản phụ khoa');
+INSERT INTO BacSi (MaNV, BangCap, ChuyenKhoa) VALUES ('BS13', N'Bác sĩ chuyên khoa II', N'Tai mũi họng');
+INSERT INTO BacSi (MaNV, BangCap, ChuyenKhoa) VALUES ('BS14', N'Bác sĩ đa khoa', N'Mắt');
+INSERT INTO BacSi (MaNV, BangCap, ChuyenKhoa) VALUES ('BS15', N'Bác sĩ chuyên khoa I', N'Da liễu');
+INSERT INTO BacSi (MaNV, BangCap, ChuyenKhoa) VALUES ('BS16', N'Thạc sĩ y học', N'Da liễu');
+INSERT INTO BacSi (MaNV, BangCap, ChuyenKhoa) VALUES ('BS17', N'Tiến sĩ y khoa', N'Ung bướu');
+INSERT INTO BacSi (MaNV, BangCap, ChuyenKhoa) VALUES ('BS18', N'Bác sĩ chuyên khoa II', N'Cấp cứu');
+INSERT INTO BacSi (MaNV, BangCap, ChuyenKhoa) VALUES ('BS19', N'Bác sĩ chuyên khoa I', N'Răng hàm mặt');
+INSERT INTO BacSi (MaNV, BangCap, ChuyenKhoa) VALUES ('BS20', N'Thạc sĩ y học', N'Chẩn đoán hình ảnh');
 
--- 7. YTa: 10 ban ghi
+-- 7. YTa - Y tá: 16 bản ghi
 INSERT INTO YTa (MaNV, TrinhDo, KinhNghiem) VALUES ('YT01', N'Trung cấp điều dưỡng', N'1 năm');
 INSERT INTO YTa (MaNV, TrinhDo, KinhNghiem) VALUES ('YT02', N'Cao đẳng điều dưỡng', N'2 năm');
 INSERT INTO YTa (MaNV, TrinhDo, KinhNghiem) VALUES ('YT03', N'Cử nhân điều dưỡng', N'3 năm');
@@ -141,26 +182,57 @@ INSERT INTO YTa (MaNV, TrinhDo, KinhNghiem) VALUES ('YT07', N'Cử nhân điều
 INSERT INTO YTa (MaNV, TrinhDo, KinhNghiem) VALUES ('YT08', N'Điều dưỡng chuyên khoa', N'4 năm');
 INSERT INTO YTa (MaNV, TrinhDo, KinhNghiem) VALUES ('YT09', N'Trung cấp điều dưỡng', N'6 năm');
 INSERT INTO YTa (MaNV, TrinhDo, KinhNghiem) VALUES ('YT10', N'Cao đẳng điều dưỡng', N'12 năm');
+INSERT INTO YTa (MaNV, TrinhDo, KinhNghiem) VALUES ('YT11', N'Cao đẳng điều dưỡng', N'2 năm');
+INSERT INTO YTa (MaNV, TrinhDo, KinhNghiem) VALUES ('YT12', N'Cử nhân điều dưỡng', N'9 năm');
+INSERT INTO YTa (MaNV, TrinhDo, KinhNghiem) VALUES ('YT13', N'Cử nhân điều dưỡng', N'5 năm');
+INSERT INTO YTa (MaNV, TrinhDo, KinhNghiem) VALUES ('YT14', N'Cao đẳng điều dưỡng', N'6 năm');
+INSERT INTO YTa (MaNV, TrinhDo, KinhNghiem) VALUES ('YT15', N'Trung cấp điều dưỡng', N'3 năm');
+INSERT INTO YTa (MaNV, TrinhDo, KinhNghiem) VALUES ('YT16', N'Điều dưỡng chuyên khoa', N'11 năm');
 
--- 8. LichLamViec: 15 ban ghi
-INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL01', '2026-10-01', N'Ca sáng', 'BS01', 'PK01');
-INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL02', '2026-10-02', N'Ca chiều', 'BS02', 'PK02');
-INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL03', '2026-10-03', N'Ca tối', 'BS03', 'PK03');
-INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL04', '2026-10-04', N'Ca sáng', 'BS04', 'PK04');
-INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL05', '2026-10-05', N'Ca chiều', 'BS05', 'PK05');
-INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL06', '2026-10-06', N'Ca tối', 'BS06', 'PK06');
-INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL07', '2026-10-07', N'Ca sáng', 'BS07', 'PK07');
-INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL08', '2026-10-08', N'Ca chiều', 'BS08', 'PK08');
-INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL09', '2026-10-09', N'Ca tối', 'BS09', 'PK09');
-INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL10', '2026-10-10', N'Ca sáng', 'BS10', 'PK10');
-INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL11', '2026-10-11', N'Ca chiều', 'BS01', 'PK11');
-INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL12', '2026-10-12', N'Ca tối', 'BS02', 'PK12');
-INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL13', '2026-10-13', N'Ca sáng', 'BS03', 'PK13');
-INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL14', '2026-10-14', N'Ca chiều', 'BS04', 'PK14');
-INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL15', '2026-10-15', N'Ca tối', 'BS05', 'PK15');
+-- 8. LichLamViec - Lịch làm việc: 40 bản ghi
+INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL01', '2026-08-05', N'Ca sáng', 'BS01', 'PK01');
+INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL02', '2026-09-09', N'Ca sáng', 'BS01', 'PK01');
+INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL03', '2026-10-07', N'Ca sáng', 'BS01', 'PK01');
+INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL04', '2026-09-10', N'Ca chiều', 'BS02', 'PK16');
+INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL05', '2026-10-08', N'Ca chiều', 'BS02', 'PK16');
+INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL06', '2026-09-15', N'Ca sáng', 'BS03', 'PK02');
+INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL07', '2026-10-13', N'Ca sáng', 'BS03', 'PK02');
+INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL08', '2026-10-14', N'Ca chiều', 'BS04', 'PK17');
+INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL09', '2026-08-20', N'Ca sáng', 'BS05', 'PK03');
+INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL10', '2026-09-22', N'Ca sáng', 'BS05', 'PK03');
+INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL11', '2026-10-20', N'Ca chiều', 'BS06', 'PK03');
+INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL12', '2026-08-12', N'Ca sáng', 'BS07', 'PK04');
+INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL13', '2026-09-16', N'Ca sáng', 'BS07', 'PK04');
+INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL14', '2026-10-21', N'Ca sáng', 'BS07', 'PK04');
+INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL15', '2026-10-22', N'Ca chiều', 'BS08', 'PK04');
+INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL16', '2026-09-23', N'Ca sáng', 'BS09', 'PK05');
+INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL17', '2026-10-26', N'Ca chiều', 'BS09', 'PK05');
+INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL18', '2026-09-29', N'Ca chiều', 'BS10', 'PK07');
+INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL19', '2026-09-30', N'Ca sáng', 'BS10', 'PK07');
+INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL20', '2026-10-27', N'Ca sáng', 'BS10', 'PK07');
+INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL21', '2026-08-26', N'Ca sáng', 'BS11', 'PK05');
+INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL22', '2026-10-14', N'Ca sáng', 'BS11', 'PK05');
+INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL23', '2026-09-17', N'Ca sáng', 'BS12', 'PK06');
+INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL24', '2026-10-15', N'Ca chiều', 'BS12', 'PK06');
+INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL25', '2026-08-27', N'Ca chiều', 'BS13', 'PK07');
+INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL26', '2026-09-24', N'Ca sáng', 'BS14', 'PK08');
+INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL27', '2026-10-22', N'Ca sáng', 'BS14', 'PK08');
+INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL28', '2026-08-18', N'Ca sáng', 'BS04', 'PK02');
+INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL29', '2026-09-03', N'Ca chiều', 'BS06', 'PK03');
+INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL30', '2026-08-19', N'Ca sáng', 'BS15', 'PK09');
+INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL31', '2026-09-18', N'Ca sáng', 'BS15', 'PK09');
+INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL32', '2026-10-16', N'Ca chiều', 'BS16', 'PK09');
+INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL33', '2026-09-08', N'Ca sáng', 'BS17', 'PK10');
+INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL34', '2026-10-12', N'Ca sáng', 'BS17', 'PK10');
+INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL35', '2026-08-30', N'Ca chiều', 'BS18', 'PK11');
+INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL36', '2026-10-03', N'Ca chiều', 'BS18', 'PK11');
+INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL37', '2026-09-25', N'Ca sáng', 'BS19', 'PK15');
+INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL38', '2026-10-23', N'Ca sáng', 'BS19', 'PK15');
+INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL39', '2026-09-02', N'Ca sáng', 'BS20', 'PK12');
+INSERT INTO LichLamViec (MaLich, NgayTruc, CaTruc, MaNV, MaPK) VALUES ('LL40', '2026-10-09', N'Ca sáng', 'BS20', 'PK12');
 
--- 9. BenhNhan: 15 ban ghi
-INSERT INTO BenhNhan (MaBN, HoTen, NgaySinh, GioiTinh, DiaChi) VALUES ('BN01', N'Nguyễn Văn An', '1968-02-03', N'Nam', N'Hà Nội');
+-- 9. BenhNhan - Bệnh nhân: 26 bản ghi
+INSERT INTO BenhNhan (MaBN, HoTen, NgaySinh, GioiTinh, DiaChi) VALUES ('BN01', N'Nguyễn Văn An', '1958-02-03', N'Nam', N'Hà Nội');
 INSERT INTO BenhNhan (MaBN, HoTen, NgaySinh, GioiTinh, DiaChi) VALUES ('BN02', N'Trần Thị Bình', '1971-03-05', N'Nữ', N'Hồ Chí Minh');
 INSERT INTO BenhNhan (MaBN, HoTen, NgaySinh, GioiTinh, DiaChi) VALUES ('BN03', N'Lê Hoàng Cường', '1974-04-07', N'Nam', N'Đà Nẵng');
 INSERT INTO BenhNhan (MaBN, HoTen, NgaySinh, GioiTinh, DiaChi) VALUES ('BN04', N'Phạm Thu Dung', '1977-05-09', N'Nữ', N'Hải Phòng');
@@ -171,80 +243,167 @@ INSERT INTO BenhNhan (MaBN, HoTen, NgaySinh, GioiTinh, DiaChi) VALUES ('BN08', N
 INSERT INTO BenhNhan (MaBN, HoTen, NgaySinh, GioiTinh, DiaChi) VALUES ('BN09', N'Đỗ Anh Minh', '1992-10-19', N'Nam', N'Hải Phòng');
 INSERT INTO BenhNhan (MaBN, HoTen, NgaySinh, GioiTinh, DiaChi) VALUES ('BN10', N'Ngô Phương Nga', '1995-11-21', N'Nữ', N'Cần Thơ');
 INSERT INTO BenhNhan (MaBN, HoTen, NgaySinh, GioiTinh, DiaChi) VALUES ('BN11', N'Dương Đức Phúc', '1998-12-23', N'Nam', N'Hà Nội');
-INSERT INTO BenhNhan (MaBN, HoTen, NgaySinh, GioiTinh, DiaChi) VALUES ('BN12', N'Lý Bảo Trâm', '2001-01-25', N'Nữ', N'Hồ Chí Minh');
-INSERT INTO BenhNhan (MaBN, HoTen, NgaySinh, GioiTinh, DiaChi) VALUES ('BN13', N'Mai Quang Vũ', '2004-02-27', N'Nam', N'Đà Nẵng');
-INSERT INTO BenhNhan (MaBN, HoTen, NgaySinh, GioiTinh, DiaChi) VALUES ('BN14', N'Đinh Thùy Vy', '1967-03-02', N'Nữ', N'Hải Phòng');
+INSERT INTO BenhNhan (MaBN, HoTen, NgaySinh, GioiTinh, DiaChi) VALUES ('BN12', N'Lý Bảo Trâm', '2018-01-25', N'Nữ', N'Hồ Chí Minh');
+INSERT INTO BenhNhan (MaBN, HoTen, NgaySinh, GioiTinh, DiaChi) VALUES ('BN13', N'Mai Quang Vũ', '2016-02-27', N'Nam', N'Đà Nẵng');
+INSERT INTO BenhNhan (MaBN, HoTen, NgaySinh, GioiTinh, DiaChi) VALUES ('BN14', N'Đinh Thùy Vy', '1950-03-02', N'Nữ', N'Hải Phòng');
 INSERT INTO BenhNhan (MaBN, HoTen, NgaySinh, GioiTinh, DiaChi) VALUES ('BN15', N'Phan Gia Khánh', '1970-04-04', N'Nam', N'Cần Thơ');
+INSERT INTO BenhNhan (MaBN, HoTen, NgaySinh, GioiTinh, DiaChi) VALUES ('BN16', N'Trương Minh Khôi', '1964-05-18', N'Nam', N'Hà Nội');
+INSERT INTO BenhNhan (MaBN, HoTen, NgaySinh, GioiTinh, DiaChi) VALUES ('BN17', N'Nguyễn Thị Hồng Nhung', '1990-07-22', N'Nữ', N'Hải Phòng');
+INSERT INTO BenhNhan (MaBN, HoTen, NgaySinh, GioiTinh, DiaChi) VALUES ('BN18', N'Lê Thị Thu Hiền', '1992-09-03', N'Nữ', N'Hà Nội');
+INSERT INTO BenhNhan (MaBN, HoTen, NgaySinh, GioiTinh, DiaChi) VALUES ('BN19', N'Phạm Văn Quân', '1985-12-01', N'Nam', N'Bình Dương');
+INSERT INTO BenhNhan (MaBN, HoTen, NgaySinh, GioiTinh, DiaChi) VALUES ('BN20', N'Vương Bảo Ngọc', '2015-06-09', N'Nữ', N'Hà Nội');
+INSERT INTO BenhNhan (MaBN, HoTen, NgaySinh, GioiTinh, DiaChi) VALUES ('BN21', N'Đào Thị Mai', '1988-03-11', N'Nữ', N'Hà Nội');
+INSERT INTO BenhNhan (MaBN, HoTen, NgaySinh, GioiTinh, DiaChi) VALUES ('BN22', N'Tô Văn Hải', '1975-08-27', N'Nam', N'Hải Phòng');
+INSERT INTO BenhNhan (MaBN, HoTen, NgaySinh, GioiTinh, DiaChi) VALUES ('BN23', N'Lương Quốc Việt', '1960-01-30', N'Nam', N'Hà Nội');
+INSERT INTO BenhNhan (MaBN, HoTen, NgaySinh, GioiTinh, DiaChi) VALUES ('BN24', N'Chu Thị Lan', '1993-11-05', N'Nữ', N'Đà Nẵng');
+INSERT INTO BenhNhan (MaBN, HoTen, NgaySinh, GioiTinh, DiaChi) VALUES ('BN25', N'Âu Minh Tuấn', '1999-02-14', N'Nam', N'Hồ Chí Minh');
+INSERT INTO BenhNhan (MaBN, HoTen, NgaySinh, GioiTinh, DiaChi) VALUES ('BN26', N'Kiều Thanh Hà', '1987-06-21', N'Nữ', N'Cần Thơ');
 
--- 10. LanHenKham: 15 ban ghi
-INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH01', '2026-10-01 09:30:00', 'BN01');
-INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH02', '2026-10-02 10:30:00', 'BN02');
-INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH03', '2026-10-03 11:30:00', 'BN03');
-INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH04', '2026-10-04 12:30:00', 'BN04');
-INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH05', '2026-10-05 13:30:00', 'BN05');
-INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH06', '2026-10-06 14:30:00', 'BN06');
-INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH07', '2026-10-07 15:30:00', 'BN07');
-INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH08', '2026-10-08 16:30:00', 'BN08');
-INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH09', '2026-10-09 08:30:00', 'BN09');
-INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH10', '2026-10-10 09:30:00', 'BN10');
-INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH11', '2026-10-11 10:30:00', 'BN11');
-INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH12', '2026-10-12 11:30:00', 'BN12');
-INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH13', '2026-10-13 12:30:00', 'BN13');
-INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH14', '2026-10-14 13:30:00', 'BN14');
-INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH15', '2026-10-15 14:30:00', 'BN15');
+-- 10. LanHenKham - Lần hẹn khám: 42 bản ghi
+INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH01', '2026-08-05 08:30:00', 'BN02');
+INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH02', '2026-09-09 08:30:00', 'BN02');
+INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH03', '2026-09-09 09:15:00', 'BN03');
+INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH04', '2026-10-07 08:30:00', 'BN04');
+INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH05', '2026-09-10 14:00:00', 'BN05');
+INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH06', '2026-09-15 08:30:00', 'BN06');
+INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH07', '2026-09-15 09:15:00', 'BN07');
+INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH08', '2026-10-13 08:30:00', 'BN06');
+INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH09', '2026-08-20 08:30:00', 'BN13');
+INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH10', '2026-09-22 08:30:00', 'BN13');
+INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH11', '2026-09-22 09:15:00', 'BN12');
+INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH12', '2026-08-12 08:30:00', 'BN01');
+INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH13', '2026-08-12 09:15:00', 'BN14');
+INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH14', '2026-09-16 08:30:00', 'BN01');
+INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH15', '2026-09-16 09:15:00', 'BN14');
+INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH16', '2026-10-21 08:30:00', 'BN01');
+INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH17', '2026-10-21 09:15:00', 'BN14');
+INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH18', '2026-09-23 09:00:00', 'BN09');
+INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH19', '2026-09-30 08:30:00', 'BN10');
+INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH20', '2026-10-27 08:30:00', 'BN11');
+INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH21', '2026-08-26 09:00:00', 'BN16');
+INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH22', '2026-08-26 09:45:00', 'BN17');
+INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH23', '2026-10-14 09:00:00', 'BN16');
+INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH24', '2026-09-17 08:30:00', 'BN18');
+INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH25', '2026-10-15 14:30:00', 'BN18');
+INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH26', '2026-08-27 15:00:00', 'BN19');
+INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH27', '2026-09-24 08:30:00', 'BN17');
+INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH28', '2026-10-22 08:30:00', 'BN17');
+INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH29', '2026-08-18 08:30:00', 'BN08');
+INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH30', '2026-09-03 15:00:00', 'BN20');
+INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH31', '2026-09-03 15:45:00', 'BN12');
+INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH32', '2026-10-22 14:30:00', 'BN15');
+INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH33', '2026-08-19 08:45:00', 'BN21');
+INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH34', '2026-08-19 09:30:00', 'BN22');
+INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH35', '2026-09-18 08:30:00', 'BN21');
+INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH36', '2026-09-08 09:00:00', 'BN23');
+INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH37', '2026-10-12 09:00:00', 'BN23');
+INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH38', '2026-08-30 15:30:00', 'BN24');
+INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH39', '2026-10-03 16:00:00', 'BN25');
+INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH40', '2026-09-25 08:30:00', 'BN26');
+INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH41', '2026-09-02 08:30:00', 'BN22');
+INSERT INTO LanHenKham (MaLanHen, NgayKham, MaBN) VALUES ('LH42', '2026-10-09 08:30:00', 'BN23');
 
--- 11. ChiTietHen: 20 ban ghi
+-- 11. ChiTietHen - Chi tiết hẹn (lần hẹn gắn với ca trực): 42 bản ghi
 INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL01', 'LH01');
 INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL02', 'LH02');
-INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL03', 'LH03');
-INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL04', 'LH04');
-INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL05', 'LH05');
-INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL06', 'LH06');
-INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL07', 'LH07');
-INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL08', 'LH08');
-INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL09', 'LH09');
-INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL10', 'LH10');
-INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL11', 'LH11');
-INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL12', 'LH12');
-INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL13', 'LH13');
-INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL14', 'LH14');
-INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL15', 'LH15');
-INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL01', 'LH02');
 INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL02', 'LH03');
 INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL03', 'LH04');
 INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL04', 'LH05');
-INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL05', 'LH06');
+INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL06', 'LH06');
+INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL06', 'LH07');
+INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL07', 'LH08');
+INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL09', 'LH09');
+INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL10', 'LH10');
+INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL10', 'LH11');
+INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL12', 'LH12');
+INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL12', 'LH13');
+INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL13', 'LH14');
+INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL13', 'LH15');
+INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL14', 'LH16');
+INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL14', 'LH17');
+INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL16', 'LH18');
+INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL19', 'LH19');
+INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL20', 'LH20');
+INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL21', 'LH21');
+INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL21', 'LH22');
+INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL22', 'LH23');
+INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL23', 'LH24');
+INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL24', 'LH25');
+INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL25', 'LH26');
+INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL26', 'LH27');
+INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL27', 'LH28');
+INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL28', 'LH29');
+INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL29', 'LH30');
+INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL29', 'LH31');
+INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL15', 'LH32');
+INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL30', 'LH33');
+INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL30', 'LH34');
+INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL31', 'LH35');
+INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL33', 'LH36');
+INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL34', 'LH37');
+INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL35', 'LH38');
+INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL36', 'LH39');
+INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL37', 'LH40');
+INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL39', 'LH41');
+INSERT INTO ChiTietHen (MaLich, MaLanHen) VALUES ('LL40', 'LH42');
 
--- 12. PhieuChamSoc: 15 ban ghi
+-- 12. PhieuChamSoc - Phiếu chăm sóc: 32 bản ghi
 INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT01', 'BN01');
-INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT02', 'BN02');
-INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT03', 'BN03');
-INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT04', 'BN04');
-INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT05', 'BN05');
-INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT06', 'BN06');
-INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT07', 'BN07');
-INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT08', 'BN08');
-INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT09', 'BN09');
-INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT10', 'BN10');
-INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT01', 'BN11');
-INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT02', 'BN12');
-INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT03', 'BN13');
-INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT04', 'BN14');
+INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT01', 'BN02');
+INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT01', 'BN03');
+INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT01', 'BN04');
+INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT02', 'BN05');
+INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT02', 'BN06');
+INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT03', 'BN07');
+INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT03', 'BN08');
+INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT04', 'BN12');
+INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT04', 'BN13');
+INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT05', 'BN14');
 INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT05', 'BN15');
+INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT06', 'BN09');
+INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT07', 'BN10');
+INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT08', 'BN11');
+INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT10', 'BN01');
+INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT11', 'BN06');
+INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT11', 'BN08');
+INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT08', 'BN19');
+INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT12', 'BN01');
+INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT12', 'BN14');
+INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT12', 'BN15');
+INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT06', 'BN16');
+INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT06', 'BN17');
+INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT07', 'BN18');
+INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT04', 'BN20');
+INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT09', 'BN24');
+INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT09', 'BN25');
+INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT13', 'BN21');
+INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT13', 'BN22');
+INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT14', 'BN23');
+INSERT INTO PhieuChamSoc (MaYT, MaBN) VALUES ('YT16', 'BN16');
 
--- 13. DonThuoc: 10 ban ghi
-INSERT INTO DonThuoc (MaDon, NgayKe, MaBN) VALUES ('DT01', '2026-10-01', 'BN01');
-INSERT INTO DonThuoc (MaDon, NgayKe, MaBN) VALUES ('DT02', '2026-10-02', 'BN02');
-INSERT INTO DonThuoc (MaDon, NgayKe, MaBN) VALUES ('DT03', '2026-10-03', 'BN03');
-INSERT INTO DonThuoc (MaDon, NgayKe, MaBN) VALUES ('DT04', '2026-10-04', 'BN04');
-INSERT INTO DonThuoc (MaDon, NgayKe, MaBN) VALUES ('DT05', '2026-10-05', 'BN05');
-INSERT INTO DonThuoc (MaDon, NgayKe, MaBN) VALUES ('DT06', '2026-10-06', 'BN06');
-INSERT INTO DonThuoc (MaDon, NgayKe, MaBN) VALUES ('DT07', '2026-10-07', 'BN07');
-INSERT INTO DonThuoc (MaDon, NgayKe, MaBN) VALUES ('DT08', '2026-10-08', 'BN08');
-INSERT INTO DonThuoc (MaDon, NgayKe, MaBN) VALUES ('DT09', '2026-10-09', 'BN09');
-INSERT INTO DonThuoc (MaDon, NgayKe, MaBN) VALUES ('DT10', '2026-10-10', 'BN10');
+-- 13. DonThuoc - Đơn thuốc: 20 bản ghi
+INSERT INTO DonThuoc (MaDon, NgayKe, MaBN) VALUES ('DT01', '2026-10-21', 'BN01');
+INSERT INTO DonThuoc (MaDon, NgayKe, MaBN) VALUES ('DT02', '2026-09-09', 'BN02');
+INSERT INTO DonThuoc (MaDon, NgayKe, MaBN) VALUES ('DT03', '2026-09-09', 'BN03');
+INSERT INTO DonThuoc (MaDon, NgayKe, MaBN) VALUES ('DT04', '2026-10-07', 'BN04');
+INSERT INTO DonThuoc (MaDon, NgayKe, MaBN) VALUES ('DT05', '2026-09-15', 'BN07');
+INSERT INTO DonThuoc (MaDon, NgayKe, MaBN) VALUES ('DT06', '2026-09-23', 'BN09');
+INSERT INTO DonThuoc (MaDon, NgayKe, MaBN) VALUES ('DT07', '2026-09-30', 'BN10');
+INSERT INTO DonThuoc (MaDon, NgayKe, MaBN) VALUES ('DT08', '2026-09-22', 'BN12');
+INSERT INTO DonThuoc (MaDon, NgayKe, MaBN) VALUES ('DT09', '2026-09-22', 'BN13');
+INSERT INTO DonThuoc (MaDon, NgayKe, MaBN) VALUES ('DT10', '2026-10-21', 'BN14');
+INSERT INTO DonThuoc (MaDon, NgayKe, MaBN) VALUES ('DT11', '2026-10-14', 'BN16');
+INSERT INTO DonThuoc (MaDon, NgayKe, MaBN) VALUES ('DT12', '2026-10-22', 'BN17');
+INSERT INTO DonThuoc (MaDon, NgayKe, MaBN) VALUES ('DT13', '2026-10-15', 'BN18');
+INSERT INTO DonThuoc (MaDon, NgayKe, MaBN) VALUES ('DT14', '2026-09-03', 'BN20');
+INSERT INTO DonThuoc (MaDon, NgayKe, MaBN) VALUES ('DT15', '2026-08-18', 'BN08');
+INSERT INTO DonThuoc (MaDon, NgayKe, MaBN) VALUES ('DT16', '2026-10-22', 'BN15');
+INSERT INTO DonThuoc (MaDon, NgayKe, MaBN) VALUES ('DT17', '2026-09-18', 'BN21');
+INSERT INTO DonThuoc (MaDon, NgayKe, MaBN) VALUES ('DT18', '2026-10-12', 'BN23');
+INSERT INTO DonThuoc (MaDon, NgayKe, MaBN) VALUES ('DT19', '2026-08-30', 'BN24');
+INSERT INTO DonThuoc (MaDon, NgayKe, MaBN) VALUES ('DT20', '2026-09-25', 'BN26');
 
--- 14. Thuoc: 15 ban ghi
+-- 14. Thuoc - Thuốc: 20 bản ghi
 INSERT INTO Thuoc (MaThuoc, TenThuoc) VALUES ('TH01', N'Paracetamol');
 INSERT INTO Thuoc (MaThuoc, TenThuoc) VALUES ('TH02', N'Amoxicillin');
 INSERT INTO Thuoc (MaThuoc, TenThuoc) VALUES ('TH03', N'Vitamin C');
@@ -260,30 +419,62 @@ INSERT INTO Thuoc (MaThuoc, TenThuoc) VALUES ('TH12', N'Cefixime');
 INSERT INTO Thuoc (MaThuoc, TenThuoc) VALUES ('TH13', N'Salbutamol');
 INSERT INTO Thuoc (MaThuoc, TenThuoc) VALUES ('TH14', N'Esomeprazole');
 INSERT INTO Thuoc (MaThuoc, TenThuoc) VALUES ('TH15', N'Acetylcysteine');
+INSERT INTO Thuoc (MaThuoc, TenThuoc) VALUES ('TH16', N'Aspirin');
+INSERT INTO Thuoc (MaThuoc, TenThuoc) VALUES ('TH17', N'Mecobalamin');
+INSERT INTO Thuoc (MaThuoc, TenThuoc) VALUES ('TH18', N'Losartan');
+INSERT INTO Thuoc (MaThuoc, TenThuoc) VALUES ('TH19', N'Prednisolone');
+INSERT INTO Thuoc (MaThuoc, TenThuoc) VALUES ('TH20', N'Cefuroxime');
 
--- 15. ChiTietDonThuoc: 20 ban ghi
-INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT01', 'TH01', N'Uống sau ăn theo chỉ định');
-INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT02', 'TH02', N'Uống sau ăn theo chỉ định');
-INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT03', 'TH03', N'Uống sau ăn theo chỉ định');
-INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT04', 'TH04', N'Uống sau ăn theo chỉ định');
-INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT05', 'TH05', N'Uống sau ăn theo chỉ định');
-INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT06', 'TH06', N'Uống sau ăn theo chỉ định');
-INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT07', 'TH07', N'Uống sau ăn theo chỉ định');
-INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT08', 'TH08', N'Uống sau ăn theo chỉ định');
-INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT09', 'TH09', N'Uống sau ăn theo chỉ định');
-INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT10', 'TH10', N'Uống sau ăn theo chỉ định');
-INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT01', 'TH06', N'Dùng theo đơn của bác sĩ');
-INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT02', 'TH07', N'Dùng theo đơn của bác sĩ');
-INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT03', 'TH08', N'Dùng theo đơn của bác sĩ');
-INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT04', 'TH09', N'Dùng theo đơn của bác sĩ');
-INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT05', 'TH10', N'Dùng theo đơn của bác sĩ');
-INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT06', 'TH11', N'Dùng theo đơn của bác sĩ');
-INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT07', 'TH12', N'Dùng theo đơn của bác sĩ');
-INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT08', 'TH13', N'Dùng theo đơn của bác sĩ');
-INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT09', 'TH14', N'Dùng theo đơn của bác sĩ');
-INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT10', 'TH15', N'Dùng theo đơn của bác sĩ');
+-- 15. ChiTietDonThuoc - Chi tiết đơn thuốc: 47 bản ghi
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT01', 'TH08', N'Uống 1 viên mỗi sáng');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT01', 'TH09', N'Uống 1 viên buổi tối');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT01', 'TH07', N'Uống sau bữa ăn chính');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT01', 'TH06', N'Uống trước ăn sáng 30 phút');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT02', 'TH01', N'Uống khi đau hoặc sốt');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT02', 'TH06', N'Uống trước ăn sáng 30 phút');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT03', 'TH01', N'Uống khi đau hoặc sốt');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT04', 'TH07', N'Uống sau bữa ăn chính');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT05', 'TH12', N'Uống 2 lần mỗi ngày sau ăn');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT06', 'TH01', N'Uống khi đau đầu');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT07', 'TH10', N'Uống 1 viên buổi tối');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT08', 'TH11', N'Pha uống theo hướng dẫn');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT09', 'TH01', N'Uống theo cân nặng khi sốt');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT09', 'TH02', N'Uống 2 lần mỗi ngày sau ăn');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT09', 'TH03', N'Uống 1 viên mỗi ngày');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT10', 'TH08', N'Uống 1 viên mỗi sáng');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT10', 'TH09', N'Uống 1 viên buổi tối');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT10', 'TH07', N'Uống sau bữa ăn chính');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT10', 'TH06', N'Uống trước ăn sáng 30 phút');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT10', 'TH03', N'Uống 1 viên mỗi ngày');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT11', 'TH17', N'Uống 1 viên buổi sáng');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT11', 'TH01', N'Uống khi đau đầu');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT11', 'TH16', N'Uống 1 viên sau ăn sáng');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT12', 'TH17', N'Uống 1 viên buổi sáng');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT13', 'TH03', N'Uống 1 viên mỗi ngày');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT13', 'TH01', N'Uống khi đau hoặc sốt');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT14', 'TH20', N'Uống 2 lần mỗi ngày sau ăn');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT14', 'TH01', N'Uống theo cân nặng khi sốt');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT14', 'TH11', N'Pha uống theo hướng dẫn');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT15', 'TH04', N'Uống sau ăn khi đau');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT15', 'TH06', N'Uống trước ăn sáng 30 phút');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT15', 'TH02', N'Uống 2 lần mỗi ngày sau ăn');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT16', 'TH08', N'Uống 1 viên mỗi sáng');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT16', 'TH18', N'Uống 1 viên buổi tối');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT16', 'TH09', N'Uống 1 viên buổi tối');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT16', 'TH16', N'Uống 1 viên sau ăn sáng');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT17', 'TH10', N'Uống 1 viên buổi tối');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT17', 'TH19', N'Uống 1 viên sau ăn sáng');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT17', 'TH05', N'Uống 1 viên mỗi ngày');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT18', 'TH06', N'Uống trước ăn sáng 30 phút');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT18', 'TH01', N'Uống khi đau');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT18', 'TH19', N'Uống 1 viên sau ăn sáng');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT18', 'TH17', N'Uống 1 viên buổi sáng');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT19', 'TH01', N'Uống khi đau hoặc sốt');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT19', 'TH11', N'Pha uống theo hướng dẫn');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT20', 'TH02', N'Uống 2 lần mỗi ngày sau ăn');
+INSERT INTO ChiTietDonThuoc (MaDon, MaThuoc, CachDung) VALUES ('DT20', 'TH04', N'Uống sau ăn khi đau');
 
--- 16. XetNghiem: 12 ban ghi
+-- 16. XetNghiem - Xét nghiệm: 15 bản ghi
 INSERT INTO XetNghiem (MaXN, TenXN) VALUES ('XN01', N'Công thức máu');
 INSERT INTO XetNghiem (MaXN, TenXN) VALUES ('XN02', N'Đường huyết');
 INSERT INTO XetNghiem (MaXN, TenXN) VALUES ('XN03', N'Chức năng gan');
@@ -296,53 +487,87 @@ INSERT INTO XetNghiem (MaXN, TenXN) VALUES ('XN09', N'Cholesterol');
 INSERT INTO XetNghiem (MaXN, TenXN) VALUES ('XN10', N'HbA1c');
 INSERT INTO XetNghiem (MaXN, TenXN) VALUES ('XN11', N'CRP');
 INSERT INTO XetNghiem (MaXN, TenXN) VALUES ('XN12', N'Đông máu');
+INSERT INTO XetNghiem (MaXN, TenXN) VALUES ('XN13', N'Điện giải đồ');
+INSERT INTO XetNghiem (MaXN, TenXN) VALUES ('XN14', N'Troponin');
+INSERT INTO XetNghiem (MaXN, TenXN) VALUES ('XN15', N'MRI sọ não');
 
--- 17. LanHenXetNghiem: 20 ban ghi
+-- 17. LanHenXetNghiem - Xét nghiệm được chỉ định trong lần hẹn: 42 bản ghi
 INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH01', 'XN01');
 INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH02', 'XN02');
-INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH03', 'XN03');
-INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH04', 'XN04');
+INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH03', 'XN01');
+INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH04', 'XN03');
 INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH05', 'XN05');
 INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH06', 'XN06');
 INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH07', 'XN07');
-INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH08', 'XN08');
-INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH09', 'XN09');
-INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH10', 'XN10');
-INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH11', 'XN11');
-INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH12', 'XN12');
-INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH13', 'XN01');
-INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH14', 'XN02');
-INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH15', 'XN03');
-INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH01', 'XN07');
-INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH02', 'XN08');
-INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH03', 'XN09');
-INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH04', 'XN10');
-INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH05', 'XN11');
+INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH08', 'XN11');
+INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH09', 'XN01');
+INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH10', 'XN11');
+INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH12', 'XN08');
+INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH12', 'XN09');
+INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH14', 'XN10');
+INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH14', 'XN09');
+INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH16', 'XN08');
+INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH16', 'XN10');
+INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH13', 'XN08');
+INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH15', 'XN04');
+INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH17', 'XN12');
+INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH18', 'XN01');
+INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH21', 'XN15');
+INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH21', 'XN01');
+INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH22', 'XN01');
+INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH23', 'XN04');
+INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH24', 'XN05');
+INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH25', 'XN02');
+INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH26', 'XN11');
+INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH29', 'XN07');
+INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH30', 'XN01');
+INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH32', 'XN08');
+INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH32', 'XN14');
+INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH32', 'XN09');
+INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH33', 'XN01');
+INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH35', 'XN03');
+INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH36', 'XN01');
+INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH36', 'XN07');
+INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH37', 'XN12');
+INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH38', 'XN13');
+INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH39', 'XN14');
+INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH41', 'XN06');
+INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH42', 'XN07');
+INSERT INTO LanHenXetNghiem (MaLanHen, MaXN) VALUES ('LH42', 'XN12');
 
--- 18. ThucHienXetNghiem: 20 ban ghi
+-- 18. ThucHienXetNghiem - Xét nghiệm đã thực hiện: 29 bản ghi
 INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS01', 'LH01', 'XN01');
-INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS02', 'LH02', 'XN02');
-INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS03', 'LH03', 'XN03');
-INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS04', 'LH04', 'XN04');
-INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS05', 'LH05', 'XN05');
-INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS06', 'LH06', 'XN06');
-INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS07', 'LH07', 'XN07');
-INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS08', 'LH08', 'XN08');
-INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS09', 'LH09', 'XN09');
-INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS10', 'LH10', 'XN10');
-INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS01', 'LH11', 'XN11');
-INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS02', 'LH12', 'XN12');
-INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS03', 'LH13', 'XN01');
-INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS04', 'LH14', 'XN02');
-INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS05', 'LH15', 'XN03');
-INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS04', 'LH01', 'XN07');
-INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS05', 'LH02', 'XN08');
-INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS06', 'LH03', 'XN09');
-INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS07', 'LH04', 'XN10');
-INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS08', 'LH05', 'XN11');
+INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS01', 'LH02', 'XN02');
+INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS01', 'LH03', 'XN01');
+INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS04', 'LH06', 'XN06');
+INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS04', 'LH07', 'XN07');
+INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS05', 'LH09', 'XN01');
+INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS05', 'LH10', 'XN11');
+INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS07', 'LH12', 'XN08');
+INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS07', 'LH12', 'XN09');
+INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS07', 'LH14', 'XN10');
+INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS07', 'LH14', 'XN09');
+INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS07', 'LH16', 'XN08');
+INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS07', 'LH13', 'XN08');
+INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS07', 'LH15', 'XN04');
+INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS09', 'LH18', 'XN01');
+INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS11', 'LH21', 'XN15');
+INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS11', 'LH21', 'XN01');
+INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS11', 'LH22', 'XN01');
+INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS12', 'LH24', 'XN05');
+INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS13', 'LH26', 'XN11');
+INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS04', 'LH29', 'XN07');
+INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS06', 'LH30', 'XN01');
+INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS08', 'LH32', 'XN08');
+INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS15', 'LH33', 'XN01');
+INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS17', 'LH36', 'XN01');
+INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS17', 'LH36', 'XN07');
+INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS18', 'LH38', 'XN13');
+INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS20', 'LH41', 'XN06');
+INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS20', 'LH42', 'XN07');
 
     COMMIT TRANSACTION;
-    PRINT N'Da chen xong du lieu mau QuanLyBenhVien.';
+    PRINT N'Đã chèn xong dữ liệu mẫu QuanLyBenhVien.';
 END TRY
 BEGIN CATCH
     IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION;
