@@ -1,0 +1,32 @@
+CREATE TABLE XetNghiem (
+    MaXN VARCHAR(20) PRIMARY KEY,
+    TenXN NVARCHAR(100)
+);
+GO
+
+-- LanHenKham va XetNghiem (Anh xa quan he N-N)
+CREATE TABLE LanHenXetNghiem (
+    MaLanHen VARCHAR(20) NOT NULL,
+    MaXN VARCHAR(20) NOT NULL,
+
+    PRIMARY KEY (MaLanHen, MaXN),
+
+    FOREIGN KEY (MaLanHen) REFERENCES LanHenKham(MaLanHen),
+    FOREIGN KEY (MaXN) REFERENCES XetNghiem(MaXN)
+);
+GO
+
+-- QUAN HE TAM NGUYEN THUC HIEN XET NGHIEM
+-- BacSi - LanHenKham - XetNghiem
+CREATE TABLE ThucHienXetNghiem (
+    MaNV VARCHAR(20) NOT NULL,
+    MaLanHen VARCHAR(20) NOT NULL,
+    MaXN VARCHAR(20) NOT NULL,
+
+    PRIMARY KEY (MaNV, MaLanHen, MaXN),
+
+    FOREIGN KEY (MaNV) REFERENCES BacSi(MaNV),
+    FOREIGN KEY (MaLanHen) REFERENCES LanHenKham(MaLanHen),
+    FOREIGN KEY (MaXN) REFERENCES XetNghiem(MaXN)
+);
+GO
