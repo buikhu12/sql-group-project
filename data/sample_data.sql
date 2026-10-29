@@ -15,6 +15,7 @@ BEGIN TRY
     DELETE FROM ChiTietDonThuoc;
     DELETE FROM ChiTietHen;
     DELETE FROM PhieuChamSoc;
+    DELETE FROM NhapVien;
     DELETE FROM DonThuoc;
     DELETE FROM LichLamViec;
     DELETE FROM LanHenKham;
@@ -566,8 +567,38 @@ INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS18', 'LH38', 'XN
 INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS20', 'LH41', 'XN06');
 INSERT INTO ThucHienXetNghiem (MaNV, MaLanHen, MaXN) VALUES ('BS20', 'LH42', 'XN07');
 
+-- 19. NhapVien - Nhập viện (Lần hẹn khám và Giường bệnh): 25 bản ghi
+-- A. Các ca đã xuất viện (Giường đã được trả về trạng thái Trống)
+INSERT INTO NhapVien (MaLanHen, MaGiuong, NgayNhap, NgayXuat) VALUES ('LH01', 'GB04', '2026-08-05 10:00:00', '2026-08-12 09:00:00');
+INSERT INTO NhapVien (MaLanHen, MaGiuong, NgayNhap, NgayXuat) VALUES ('LH29', 'GB07', '2026-08-18 10:30:00', '2026-08-25 08:30:00');
+INSERT INTO NhapVien (MaLanHen, MaGiuong, NgayNhap, NgayXuat) VALUES ('LH08', 'GB08', '2026-10-13 10:00:00', '2026-10-18 14:00:00');
+INSERT INTO NhapVien (MaLanHen, MaGiuong, NgayNhap, NgayXuat) VALUES ('LH09', 'GB10', '2026-08-20 11:00:00', '2026-08-26 10:00:00');
+INSERT INTO NhapVien (MaLanHen, MaGiuong, NgayNhap, NgayXuat) VALUES ('LH12', 'GB12', '2026-08-12 11:00:00', '2026-08-20 09:00:00');
+INSERT INTO NhapVien (MaLanHen, MaGiuong, NgayNhap, NgayXuat) VALUES ('LH21', 'GB16', '2026-08-26 11:30:00', '2026-09-02 09:00:00');
+INSERT INTO NhapVien (MaLanHen, MaGiuong, NgayNhap, NgayXuat) VALUES ('LH26', 'GB23', '2026-08-27 16:30:00', '2026-09-01 10:00:00');
+
+-- B. Các ca đang nằm viện (NgayXuat IS NULL - Khớp 18 giường Đang sử dụng)
+INSERT INTO NhapVien (MaLanHen, MaGiuong, NgayNhap, NgayXuat) VALUES ('LH02', 'GB01', '2026-09-09 10:00:00', NULL);
+INSERT INTO NhapVien (MaLanHen, MaGiuong, NgayNhap, NgayXuat) VALUES ('LH03', 'GB02', '2026-09-09 11:00:00', NULL);
+INSERT INTO NhapVien (MaLanHen, MaGiuong, NgayNhap, NgayXuat) VALUES ('LH04', 'GB03', '2026-10-07 10:30:00', NULL);
+INSERT INTO NhapVien (MaLanHen, MaGiuong, NgayNhap, NgayXuat) VALUES ('LH06', 'GB05', '2026-09-15 10:30:00', NULL);
+INSERT INTO NhapVien (MaLanHen, MaGiuong, NgayNhap, NgayXuat) VALUES ('LH07', 'GB06', '2026-09-15 11:15:00', NULL);
+INSERT INTO NhapVien (MaLanHen, MaGiuong, NgayNhap, NgayXuat) VALUES ('LH10', 'GB09', '2026-09-22 10:00:00', NULL);
+INSERT INTO NhapVien (MaLanHen, MaGiuong, NgayNhap, NgayXuat) VALUES ('LH14', 'GB12', '2026-09-16 10:30:00', NULL);
+INSERT INTO NhapVien (MaLanHen, MaGiuong, NgayNhap, NgayXuat) VALUES ('LH16', 'GB13', '2026-10-21 10:00:00', NULL);
+INSERT INTO NhapVien (MaLanHen, MaGiuong, NgayNhap, NgayXuat) VALUES ('LH32', 'GB14', '2026-10-22 15:30:00', NULL);
+INSERT INTO NhapVien (MaLanHen, MaGiuong, NgayNhap, NgayXuat) VALUES ('LH18', 'GB15', '2026-09-23 11:00:00', NULL);
+INSERT INTO NhapVien (MaLanHen, MaGiuong, NgayNhap, NgayXuat) VALUES ('LH38', 'GB19', '2026-08-30 17:00:00', NULL);
+INSERT INTO NhapVien (MaLanHen, MaGiuong, NgayNhap, NgayXuat) VALUES ('LH39', 'GB20', '2026-10-03 17:30:00', NULL);
+INSERT INTO NhapVien (MaLanHen, MaGiuong, NgayNhap, NgayXuat) VALUES ('LH19', 'GB22', '2026-09-30 10:00:00', NULL);
+INSERT INTO NhapVien (MaLanHen, MaGiuong, NgayNhap, NgayXuat) VALUES ('LH27', 'GB24', '2026-09-24 10:30:00', NULL);
+INSERT INTO NhapVien (MaLanHen, MaGiuong, NgayNhap, NgayXuat) VALUES ('LH33', 'GB25', '2026-08-19 11:00:00', NULL);
+INSERT INTO NhapVien (MaLanHen, MaGiuong, NgayNhap, NgayXuat) VALUES ('LH36', 'GB27', '2026-09-08 11:00:00', NULL);
+INSERT INTO NhapVien (MaLanHen, MaGiuong, NgayNhap, NgayXuat) VALUES ('LH37', 'GB28', '2026-10-12 11:30:00', NULL);
+INSERT INTO NhapVien (MaLanHen, MaGiuong, NgayNhap, NgayXuat) VALUES ('LH23', 'GB30', '2026-10-14 11:00:00', NULL);
+
     COMMIT TRANSACTION;
-    PRINT N'Đã chèn xong dữ liệu mẫu QuanLyBenhVien.';
+    PRINT N'Đã chèn xong toàn bộ dữ liệu mẫu QuanLyBenhVien (kèm bảng NhapVien).';
 END TRY
 BEGIN CATCH
     IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION;
