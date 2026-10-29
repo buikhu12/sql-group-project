@@ -267,7 +267,20 @@ CREATE TABLE ThucHienXetNghiem (
     FOREIGN KEY (MaXN) REFERENCES XetNghiem(MaXN)
 );
 GO
-
+-- ============================================================
+-- BẢNG NHẬP VIỆN (Liên kết LẦN HẸN KHÁM và GIƯỜNG BỆNH)
+-- ============================================================
+CREATE TABLE NhapVien (
+    MaNhapVien INT IDENTITY(1,1) PRIMARY KEY,
+    MaLanHen   VARCHAR(20) NOT NULL,
+    MaGiuong   VARCHAR(20) NOT NULL,
+    NgayNhap   DATETIME NOT NULL,
+    NgayXuat   DATETIME NULL,
+    CONSTRAINT FK_NhapVien_LanHen FOREIGN KEY (MaLanHen) REFERENCES LanHenKham(MaLanHen),
+    CONSTRAINT FK_NhapVien_Giuong FOREIGN KEY (MaGiuong) REFERENCES GiuongBenh(MaGiuong),
+    CONSTRAINT CHK_NgayXuat CHECK (NgayXuat IS NULL OR NgayXuat >= NgayNhap)
+);
+GO
 -- ============================================================
 -- KET THUC TAO CAC BANG
 -- ============================================================
