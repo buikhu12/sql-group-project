@@ -1,0 +1,31 @@
+-- Khoa (1) ---- (N) NhanVienYTe
+CREATE TABLE NhanVienYTe (
+    MaNV VARCHAR(20) PRIMARY KEY,
+    HoTen NVARCHAR(100),
+    NgaySinh DATE,
+    SDT VARCHAR(15),
+    MaKhoa VARCHAR(20) NOT NULL,
+
+    FOREIGN KEY (MaKhoa) REFERENCES Khoa(MaKhoa)
+);
+GO
+
+-- CHUYEN BIET HOA NHAN VIEN Y TE
+-- d: cac tap con BAC SI va Y TA roi nhau
+CREATE TABLE BacSi (
+    MaNV VARCHAR(20) PRIMARY KEY,
+    BangCap NVARCHAR(100),
+    ChuyenKhoa NVARCHAR(100),
+
+    FOREIGN KEY (MaNV) REFERENCES NhanVienYTe(MaNV)
+);
+GO
+
+CREATE TABLE YTa (
+    MaNV VARCHAR(20) PRIMARY KEY,
+    TrinhDo NVARCHAR(100),
+    KinhNghiem NVARCHAR(100),
+
+    FOREIGN KEY (MaNV) REFERENCES NhanVienYTe(MaNV)
+);
+GO

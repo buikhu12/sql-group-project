@@ -1,0 +1,9 @@
+-- BenhVien (1) ---- (N) Khoa
+CREATE TABLE Khoa (
+    MaKhoa VARCHAR(20) PRIMARY KEY,
+    TenKhoa NVARCHAR(100),
+    MaBV VARCHAR(20) NOT NULL,
+
+    FOREIGN KEY (MaBV) REFERENCES BenhVien(MaBV)
+);
+GO
